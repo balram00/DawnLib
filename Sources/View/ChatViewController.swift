@@ -1,18 +1,11 @@
-//
-//  ChatViewController.swift
-//  DawnLib
-//
-//  Created by bitcot on 18/12/24.
-//
-
-import UIKit
-
 import UIKit
 
 public class ChatViewController: UIViewController {
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        // Initialization code
+        view.backgroundColor = .green
     }
     
     public static func instantiate() -> ChatViewController {

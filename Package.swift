@@ -1,6 +1,4 @@
-// swift-tools-version: 6.0
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
+// swift-tools-version: 5.7
 import PackageDescription
 
 let package = Package(
@@ -9,7 +7,6 @@ let package = Package(
         .iOS(.v13) // Specify the minimum iOS version
     ],
     products: [
-        // The library your app exports
         .library(
             name: "DawnLib",
             targets: ["DawnLib"]
@@ -25,10 +22,10 @@ let package = Package(
             path: "Sources",
             resources: [
                 // Include fonts, storyboards, or any other bundled resources
-//                .process("Resources/Fonts"),
                 .process("Resources/Storyboards/Main.storyboard"),
-                .process("Resources/View/ChatViewController"),
-//                .process("Resources/Assets.xcassets"),
+                // Add any additional resource directories here
+                // .process("Resources/Fonts"),
+                // .process("Resources/Assets.xcassets"),
             ]
         ),
         .testTarget(
