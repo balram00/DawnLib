@@ -27,7 +27,7 @@ let package = Package(
                 // Include fonts, storyboards, or any other bundled resources
 //                .process("Resources/Fonts"),
                 .process("Resources/Storyboards"),
-                .process("Resources/Assets.xcassets"),
+//                .process("Resources/Assets.xcassets"),
             ]
         ),
         .testTarget(

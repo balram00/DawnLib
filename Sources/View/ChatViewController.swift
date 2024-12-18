@@ -7,15 +7,19 @@
 
 import UIKit
 
+import UIKit
+
 public class ChatViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        let label = UILabel()
-        label.text = "Welcome to Chat!"
-        label.textAlignment = .center
-        label.frame = view.bounds
-        view.addSubview(label)
+    }
+    
+    public static func instantiate() -> ChatViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.module)
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController else {
+            fatalError("ChatViewController not found in Main.storyboard")
+        }
+        return viewController
     }
 }
