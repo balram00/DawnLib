@@ -27,7 +27,7 @@ let package = Package(
                 // Include fonts, storyboards, or any other bundled resources
 //                .process("Resources/Fonts"),
                 .process("Resources/Storyboards/Main.storyboard"),
-                .process("Resources/View/MainViewController.swift"),
+                .process("Resources/View/ChatViewController"),
 //                .process("Resources/Assets.xcassets"),
             ]
         ),
