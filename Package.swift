@@ -20,8 +20,8 @@ let package = Package(
             path: "Sources",
             resources: [
                 .process("Resources/Storyboards/Main.storyboard"),
-                .process("Resources/Assets.xcassets"),
-                .process("Resources/Fonts")
+//                .process("Resources/Assets.xcassets"),
+//                .process("Resources/Fonts")
             ]
         ),
         .testTarget(

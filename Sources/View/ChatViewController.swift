@@ -8,11 +8,17 @@ public class ChatViewController: UIViewController {
         view.backgroundColor = .green
     }
 //    
-//    public static func instantiate() -> ChatViewController {
-//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.module)
-//        guard let viewController = storyboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController else {
-//            fatalError("ChatViewController not found in Main.storyboard")
-//        }
-//        return viewController
-//    }
+    public static func instantiate() -> ChatViewController {
+        // Ensure Bundle.module contains the storyboard
+        guard let storyboard = try? UIStoryboard(name: "Main", bundle: Bundle.module) else {
+            fatalError("Main.storyboard not found in Bundle.module")
+        }
+        
+        // Instantiate ChatViewController from the storyboard
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController else {
+            fatalError("ChatViewController not found in Main.storyboard or identifier mismatch")
+        }
+        
+        return viewController
+    }
 }
