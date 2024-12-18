@@ -6,29 +6,34 @@ import PackageDescription
 let package = Package(
     name: "DawnLib",
     platforms: [
-        .iOS(.v12),  // Minimum iOS version
-        .macOS(.v10_15)
+        .iOS(.v13) // Specify the minimum iOS version
     ],
     products: [
-        // The library product to be used in other projects
+        // The library your app exports
         .library(
             name: "DawnLib",
             targets: ["DawnLib"]
-        )
+        ),
     ],
     dependencies: [
-        // Add any external dependencies here if needed
+        // Add dependencies here if your library uses any third-party packages
     ],
     targets: [
-        // Main target containing the login logic
         .target(
             name: "DawnLib",
-            dependencies: []
+            dependencies: [],
+            path: "Sources",
+            resources: [
+                // Include fonts, storyboards, or any other bundled resources
+//                .process("Resources/Fonts"),
+                .process("Resources/Storyboards"),
+                .process("Resources/Assets.xcassets"),
+            ]
         ),
-        // Test target for unit testing the login module
         .testTarget(
             name: "DawnLibTests",
-            dependencies: ["DawnLib"]
-        )
+            dependencies: ["DawnLib"],
+            path: "Tests"
+        ),
     ]
 )
