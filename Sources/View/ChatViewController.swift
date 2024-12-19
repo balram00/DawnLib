@@ -24,7 +24,7 @@ public class ChatViewController: UIViewController {
         return viewController
     }
     
-    func processParameters(params: [String: Any]) {
+    public func processParameters(params: [String: Any]) {
         for (key, value) in params {
             print("\(key): \(value)")
         }
