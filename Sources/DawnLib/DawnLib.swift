@@ -10,21 +10,15 @@ public class ChatLauncher {
     @MainActor public static let shared = ChatLauncher() // Singleton instance
 
     private init() {} // Prevent direct initialization
-    
-    /// Method to present ChatViewController as the starting page
-    @MainActor public func launchChat(from window: UIWindow?) {
-        guard let window = window else {
-            print("Error: UIWindow is nil")
+
+    /// Method to push ChatViewController
+    @MainActor public func launchChat(from navigationController: UINavigationController?) {
+        guard let navigationController = navigationController else {
+            print("Error: NavigationController is nil")
             return
         }
         
-        // Create an instance of ChatViewController
-        let chatViewController = ChatViewController()
-        // Set up a navigation controller (optional but recommended)
-        let navigationController = UINavigationController(rootViewController: chatViewController)
-        
-        // Set the navigation controller as the root view controller
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
+        let chatViewController = ChatViewController.instantiate()
+        navigationController.pushViewController(chatViewController, animated: true)
     }
 }
