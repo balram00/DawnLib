@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class ChatViewControllers: UIViewController {
+class ChatViewController: UIViewController {
 
     // Outlets
     @IBOutlet weak var chatInputView: UIView!
@@ -270,7 +270,7 @@ public class ChatViewControllers: UIViewController {
 
 extension ChatViewController: UITextViewDelegate {
     
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         scrollToBottom()
         DispatchQueue.main.async {
             self.chatInputView.layer.borderWidth = 2
@@ -286,7 +286,7 @@ extension ChatViewController: UITextViewDelegate {
         return true
     }
 
-    func textViewDidEndEditing(_ textView: UITextView) {
+    public func textViewDidEndEditing(_ textView: UITextView) {
         print("Did end editing: \(textView.text ?? "")")
         chatInputView.layer.borderColor = UIColor.clear.cgColor
         
@@ -302,20 +302,10 @@ extension ChatViewController: UITextViewDelegate {
         return true
     }
 
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text ?? ""
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
         print("Updated text: \(updatedText)")
         return true
-    }
-
-    func scrollToBottom() {
-        DispatchQueue.main.async {
-            let lastRow = self.questionTableView.numberOfRows(inSection: 0) - 1
-            if lastRow >= 0 {
-                let indexPath = IndexPath(row: lastRow, section: 0)
-                self.questionTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-            }
-        }
     }
 }
