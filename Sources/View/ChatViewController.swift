@@ -7,20 +7,18 @@
 
 import UIKit
 
-class ChatViewController: UIViewController {
+public class ChatViewController: UIViewController {
 
     // Outlets
-    @IBOutlet weak var chatInputView: UIView!
-    @IBOutlet weak var inputTextView: UITextView!
-    @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet weak var questionTableView: UITableView!
-    @IBOutlet weak var customInputViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet public weak var chatInputView: UIView!
+    @IBOutlet public weak var inputTextView: UITextView!
+    @IBOutlet public weak var sendButton: UIButton!
+    @IBOutlet public weak var questionTableView: UITableView!
+    @IBOutlet public weak var customInputViewBottomConstraint: NSLayoutConstraint!
 
     // Properties
-    var currentKeyboardFrame: CGRect?
-//    var chatItems: [ChatItem] = []
-    
-    var chatItems: [ChatItem] = [
+    public var currentKeyboardFrame: CGRect?
+    public var chatItems: [ChatItem] = [
         ChatItem(type: .question("What is your name?")),
         ChatItem(type: .question("Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.")),
         ChatItem(type: .loader),
@@ -54,7 +52,7 @@ class ChatViewController: UIViewController {
 
     // MARK: - Life Cycle
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavbar()
         setUpTableView()
@@ -63,7 +61,7 @@ class ChatViewController: UIViewController {
 
     // MARK: - Setup Methods
 
-    func setUpNavbar() {
+    public func setUpNavbar() {
            // Use the helper methods to create the navbar components
            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: NavbarHelper.createLeftBarButton())
            
@@ -72,7 +70,7 @@ class ChatViewController: UIViewController {
            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
        }
     
-    @objc func rightButtonTapped() {
+    @objc public func rightButtonTapped() {
            // Handle right button tap
        }
     
@@ -93,7 +91,7 @@ class ChatViewController: UIViewController {
         return viewController
     }
 
-    func setUpTableView() {
+    public func setUpTableView() {
         // Register cells
         questionTableView.register(UINib(nibName: QuestionTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: QuestionTableViewCell.identifier)
         questionTableView.register(UINib(nibName: AnswerTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: AnswerTableViewCell.identifier)
@@ -103,7 +101,7 @@ class ChatViewController: UIViewController {
         questionTableView.register(UINib(nibName: ChatFooterCell.identifier, bundle: nil), forCellReuseIdentifier: ChatFooterCell.identifier)
     }
 
-    func setUpNotificationObservers() {
+    public func setUpNotificationObservers() {
         // Observers for keyboard events
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -115,11 +113,11 @@ class ChatViewController: UIViewController {
 
     // MARK: - Actions
 
-    @objc func dismissKeyboard() {
+    @objc public func dismissKeyboard() {
         view.endEditing(true)
     }
 
-    @objc func keyboardWillShow(_ notification: Notification) {
+    @objc public func keyboardWillShow(_ notification: Notification) {
         scrollToBottom() // Ensure it scrolls to the bottom
         if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardFrame.height
@@ -134,23 +132,17 @@ class ChatViewController: UIViewController {
         }
     }
 
-       
-       @objc func keyboardWillHide(_ notification: Notification) {
-           // Reset the bottom constraint of the custom input view
-           customInputViewBottomConstraint.constant = 0
-           
-           // Animate the layout change
-           UIView.animate(withDuration: 0.3) {
-               self.view.layoutIfNeeded()
-           }
-       }
-       
-       deinit {
-           // Unregister from notifications
-           NotificationCenter.default.removeObserver(self)
-       }
-    
-    func scrollToBottom() {
+    @objc public func keyboardWillHide(_ notification: Notification) {
+        // Reset the bottom constraint of the custom input view
+        customInputViewBottomConstraint.constant = 0
+
+        // Animate the layout change
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    public func scrollToBottom() {
         DispatchQueue.main.async {
             let lastRow = self.questionTableView.numberOfRows(inSection: 0) - 1
             if lastRow >= 0 {
@@ -162,15 +154,15 @@ class ChatViewController: UIViewController {
 
     // MARK: - Table View DataSource & Delegate
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatItems.count + 2 // Including header and footer
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             // Header Cell
             guard let header = tableView.dequeueReusableCell(withIdentifier: ChatHeaderCell.identifier) as? ChatHeaderCell else {
@@ -220,11 +212,11 @@ class ChatViewController: UIViewController {
         }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Handle row selection
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Calculate height for rows dynamically
         if indexPath.row == 0 {
             return 200.0 // Height for the header
@@ -240,11 +232,11 @@ class ChatViewController: UIViewController {
         case .question(let question):
             let width = tableView.frame.width - 40
             let height = calculateHeight(forText: question, width: width)
-                return height + 60
+            return height + 60
         case .answer(let answerText):
-             let width = tableView.frame.width - 40
-             let height = calculateHeight(forText: answerText, width: width)
-                return height + 60
+            let width = tableView.frame.width - 40
+            let height = calculateHeight(forText: answerText, width: width)
+            return height + 60
         case .bulletPoints(_, _):
             return 200.0
         case .loader:
@@ -253,19 +245,19 @@ class ChatViewController: UIViewController {
             return 600.0
         }
     }
-    
-    func calculateHeight(forText text: String, width: CGFloat) -> CGFloat {
-           let label = UILabel()
-           label.numberOfLines = 0  // Allow the label to wrap text
-           label.text = text
-           label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in the cell
-   
-           // Calculate the size based on the text and the provided width
-           let maxSize = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-           let requiredSize = label.sizeThatFits(maxSize)
-   
-           return requiredSize.height
-       }
+
+    public func calculateHeight(forText text: String, width: CGFloat) -> CGFloat {
+        let label = UILabel()
+        label.numberOfLines = 0  // Allow the label to wrap text
+        label.text = text
+        label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in the cell
+
+        // Calculate the size based on the text and the provided width
+        let maxSize = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let requiredSize = label.sizeThatFits(maxSize)
+
+        return requiredSize.height
+    }
 }
 
 extension ChatViewController: UITextViewDelegate {
@@ -296,7 +288,7 @@ extension ChatViewController: UITextViewDelegate {
         }
     }
     
-    func textViewShouldReturn(_ textView: UITextView) -> Bool {
+    public func textViewShouldReturn(_ textView: UITextView) -> Bool {
         // Dismiss the keyboard when the return key is pressed
         textView.resignFirstResponder()
         return true
