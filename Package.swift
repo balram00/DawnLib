@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "DawnLib",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v13),
     ],
     products: [
         .library(
@@ -14,16 +14,21 @@ let package = Package(
     ],
     dependencies: [],
     targets: [
+        // Target for the core library
         .target(
             name: "DawnLib",
             dependencies: [],
             path: "Sources",
             resources: [
-                .process("Resources/Storyboards/Main.storyboard"),
-//                .process("Resources/Assets.xcassets"),
-//                .process("Resources/Fonts")
+                // Add resources like storyboards, XIBs, images, etc.
+                .process("Resources/Storyboards/Main.storyboard"),  // Storyboard
+//                .process("Resources/Images/logo.png"),              // Images
+//                .process("Resources/Fonts/CustomFont.ttf"),         // Fonts (if any)
+//                .process("Resources/XIBs/CustomView.xib")           // XIB files
             ]
         ),
+        
+        // Test target
         .testTarget(
             name: "DawnLibTests",
             dependencies: ["DawnLib"],
