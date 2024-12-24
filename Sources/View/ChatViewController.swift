@@ -18,7 +18,7 @@ public class ChatViewController: UIViewController {
 
     // Properties
     public var currentKeyboardFrame: CGRect?
-    public var chatItems: [ChatItem] = [
+    var chatItems: [ChatItem] = [
         ChatItem(type: .question("What is your name?")),
         ChatItem(type: .question("Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.")),
         ChatItem(type: .loader),
