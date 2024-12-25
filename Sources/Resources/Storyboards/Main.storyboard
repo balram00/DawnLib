@@ -102,7 +102,7 @@
         <!--Color Navigation View Controller-->
         <scene sceneID="kN5-fK-WCd">
             <objects>
-                <navigationController storyboardIdentifier="ColorNavigationViewController" automaticallyAdjustsScrollViewInsets="NO" id="8KC-fK-xUP" customClass="ColorNavigationViewController" customModule="DawnLib" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ColorNavigationViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8KC-fK-xUP" customClass="ColorNavigationViewController" customModule="DawnLib" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jaj-Pe-Qso">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
