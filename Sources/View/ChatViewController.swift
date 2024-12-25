@@ -159,14 +159,18 @@ public class ChatViewController: UIViewController {
             }
         }
     }
+    
+  func numberofsectionInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
 
     // MARK: - Table View DataSource & Delegate
 
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatItems.count + 2 // Including header and footer
     }
 
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             // Header Cell
             guard let header = tableView.dequeueReusableCell(withIdentifier: ChatHeaderCell.identifier) as? ChatHeaderCell else {
@@ -216,11 +220,11 @@ public class ChatViewController: UIViewController {
         }
     }
 
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Handle row selection
     }
 
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Calculate height for rows dynamically
         if indexPath.row == 0 {
             return 200.0 // Height for the header
@@ -250,7 +254,7 @@ public class ChatViewController: UIViewController {
         }
     }
 
-    public func calculateHeight(forText text: String, width: CGFloat) -> CGFloat {
+    func calculateHeight(forText text: String, width: CGFloat) -> CGFloat {
         let label = UILabel()
         label.numberOfLines = 0  // Allow the label to wrap text
         label.text = text
