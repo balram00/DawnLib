@@ -162,7 +162,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             .register(
                 UINib(
                     nibName: ChatHeaderCell.identifier,
-                    bundle: nil
+                    bundle: Bundle.module
                 ),
                 forCellReuseIdentifier: ChatHeaderCell.identifier
             )
@@ -170,7 +170,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             .register(
                 UINib(
                     nibName: ChatFooterCell.identifier,
-                    bundle: nil
+                    bundle: Bundle.module
                 ),
                 forCellReuseIdentifier: ChatFooterCell.identifier
             )
@@ -178,7 +178,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             .register(
                 UINib(
                     nibName: QuestionTableViewCell.identifier,
-                    bundle: nil
+                    bundle: Bundle.module
                 ),
                 forCellReuseIdentifier: QuestionTableViewCell.identifier
             )
@@ -186,7 +186,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             .register(
                 UINib(
                     nibName: AnswerTableViewCell.identifier,
-                    bundle: nil
+                    bundle: Bundle.module
                 ),
                 forCellReuseIdentifier: AnswerTableViewCell.identifier
             )
@@ -194,7 +194,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             .register(
                 UINib(
                     nibName: ResponseTableViewCell.identifier,
-                    bundle: nil
+                    bundle: Bundle.module
                 ),
                 forCellReuseIdentifier: ResponseTableViewCell.identifier
             )
@@ -202,7 +202,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             .register(
                 UINib(
                     nibName: LoaderTableViewCell.identifier,
-                    bundle: nil
+                    bundle: Bundle.module
                 ),
                 forCellReuseIdentifier: LoaderTableViewCell.identifier
             )
