@@ -7,7 +7,7 @@
 
 import UIKit
 
-public class ChatViewController: UIViewController {
+public class ChatViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     // Outlets
     @IBOutlet public weak var chatInputView: UIView!

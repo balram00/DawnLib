@@ -33,8 +33,8 @@
                                 </prototypes>
                                 <sections/>
                                 <connections>
-                                    <outlet property="dataSource" destination="zNP-Hb-XgS" id="8lh-Ew-P9N"/>
-                                    <outlet property="delegate" destination="zNP-Hb-XgS" id="D2g-SW-hHh"/>
+                                    <outlet property="dataSource" destination="zNP-Hb-XgS" id="t9E-nY-L7P"/>
+                                    <outlet property="delegate" destination="zNP-Hb-XgS" id="FVP-Oj-4Bk"/>
                                 </connections>
                             </tableView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mRU-HV-onN">
