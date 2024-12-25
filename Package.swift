@@ -21,7 +21,7 @@ let package = Package(
             path: "Sources",
             resources: [
                 // Add resources like storyboards, XIBs, images, etc.
-                .process("Resources/Storyboards/Main.storyboard"),  // Storyboard
+                .process("Resources/Storyboards"),  // Storyboard
 //                .process("Resources/Images/logo.png"),              // Images
 //                .process("Resources/Fonts/CustomFont.ttf"),         // Fonts (if any)
 //                .process("Resources/XIBs/CustomView.xib")           // XIB files
