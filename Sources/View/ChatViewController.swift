@@ -157,6 +157,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     public func setUpTableView() {
+        inputTextView.delegate = self
         // Register cells
         questionTableView
             .register(
