@@ -160,11 +160,13 @@ public class ChatViewController: UIViewController {
         }
     }
     
-  func numberofsectionInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
 
     // MARK: - Table View DataSource & Delegate
+    
+    func numberofsectionInTableView(tableView: UITableView) -> Int {
+          return 1
+      }
+
 
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatItems.count + 2 // Including header and footer
