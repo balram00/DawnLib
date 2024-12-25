@@ -3,8 +3,6 @@
 import Foundation
 import UIKit
 
-import UIKit
-
 public class ChatLauncher {
     
     @MainActor public static let shared = ChatLauncher() // Singleton instance

@@ -13,7 +13,7 @@
         <!--Chat View Controller-->
         <scene sceneID="Oje-gQ-wE9">
             <objects>
-                <viewController storyboardIdentifier="ChatViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zNP-Hb-XgS" customClass="ChatViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zNP-Hb-XgS" customClass="ChatViewController" customModule="DawnLib" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EdC-aG-wkk">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
