@@ -201,6 +201,14 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         questionTableView
             .register(
                 UINib(
+                    nibName: FeedbackTableViewCell.identifier,
+                    bundle: Bundle.module
+                ),
+                forCellReuseIdentifier: FeedbackTableViewCell.identifier
+            )
+        questionTableView
+            .register(
+                UINib(
                     nibName: LoaderTableViewCell.identifier,
                     bundle: Bundle.module
                 ),

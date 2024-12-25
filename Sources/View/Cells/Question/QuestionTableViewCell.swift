@@ -28,27 +28,22 @@ class QuestionTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
           super.layoutSubviews()
-          // Adjust the contentView's frame to add padding
         questionView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
         questionView.layer.cornerRadius = questionView.frame.size.height / 2
         questionView.layer.masksToBounds = true
-        
         messageImage.layer.cornerRadius = messageImage.frame.size.height / 2
-
         questionLabel.applyCustomStyle(
             fontFamily: FontConstants.arail,
             fontSize: 16,
             lineHeight: 23,
             alignment: .left
         )
-
-
       }
 
     func configure(with questionText: String) {
            questionLabel.text = questionText
        }
-    
+
 }
 
 
