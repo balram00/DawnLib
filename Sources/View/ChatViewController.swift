@@ -160,19 +160,17 @@ public class ChatViewController: UIViewController {
         }
     }
     
+    public func numberofsectionInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
 
     // MARK: - Table View DataSource & Delegate
-    
-    func numberofsectionInTableView(tableView: UITableView) -> Int {
-          return 1
-      }
 
-
-   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatItems.count + 2 // Including header and footer
     }
 
-   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             // Header Cell
             guard let header = tableView.dequeueReusableCell(withIdentifier: ChatHeaderCell.identifier) as? ChatHeaderCell else {
@@ -222,11 +220,11 @@ public class ChatViewController: UIViewController {
         }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Handle row selection
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Calculate height for rows dynamically
         if indexPath.row == 0 {
             return 200.0 // Height for the header
@@ -256,7 +254,7 @@ public class ChatViewController: UIViewController {
         }
     }
 
-    func calculateHeight(forText text: String, width: CGFloat) -> CGFloat {
+    public func calculateHeight(forText text: String, width: CGFloat) -> CGFloat {
         let label = UILabel()
         label.numberOfLines = 0  // Allow the label to wrap text
         label.text = text
