@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8KC-fK-xUP">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -102,7 +102,7 @@
         <!--Color Navigation View Controller-->
         <scene sceneID="kN5-fK-WCd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8KC-fK-xUP" customClass="ColorNavigationViewController" customModule="DawnLib" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ColorNavigationViewController" automaticallyAdjustsScrollViewInsets="NO" id="8KC-fK-xUP" customClass="ColorNavigationViewController" customModule="DawnLib" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jaj-Pe-Qso">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>

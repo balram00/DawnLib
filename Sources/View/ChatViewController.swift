@@ -24,7 +24,7 @@ public class ChatViewController: UIViewController {
         ChatItem(type: .loader),
         ChatItem(type: .feedback),
         ChatItem(type: .question("What is your favorite color?")),
-        ChatItem(type: .question("Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.")),
+        ChatItem(type: .question("Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.")),
         ChatItem(type: .answer("Blue is my favorite color.")),
         ChatItem(type: .feedback),
         ChatItem(type: .bulletPoints(
@@ -66,7 +66,12 @@ public class ChatViewController: UIViewController {
            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: NavbarHelper.createLeftBarButton())
            
            let rightButton = NavbarHelper.createRightBarButton()
-           rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+           rightButton
+            .addTarget(
+                self,
+                action: #selector(rightButtonTapped),
+                for: .touchUpInside
+            )
            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
        }
     
@@ -93,9 +98,21 @@ public class ChatViewController: UIViewController {
 
     public func setUpTableView() {
         // Register cells
-        questionTableView.register(UINib(nibName: QuestionTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: QuestionTableViewCell.identifier)
-        questionTableView.register(UINib(nibName: AnswerTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: AnswerTableViewCell.identifier)
-        questionTableView.register(UINib(nibName: ResponseTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: ResponseTableViewCell.identifier)
+        questionTableView.register(
+            UINib(
+                nibName: QuestionTableViewCell.identifier,
+                bundle: nil
+            ),
+            forCellReuseIdentifier: QuestionTableViewCell.identifier
+        )
+        questionTableView.register(
+            UINib(nibName: AnswerTableViewCell.identifier, bundle: nil),
+            forCellReuseIdentifier: AnswerTableViewCell.identifier
+        )
+        questionTableView.register(
+            UINib(nibName: ResponseTableViewCell.identifier, bundle: nil),
+            forCellReuseIdentifier: ResponseTableViewCell.identifier
+        )
         questionTableView.register(UINib(nibName: LoaderTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: LoaderTableViewCell.identifier)
         questionTableView.register(UINib(nibName: ChatHeaderCell.identifier, bundle: nil), forCellReuseIdentifier: ChatHeaderCell.identifier)
         questionTableView.register(UINib(nibName: ChatFooterCell.identifier, bundle: nil), forCellReuseIdentifier: ChatFooterCell.identifier)
@@ -153,10 +170,6 @@ public class ChatViewController: UIViewController {
     }
 
     // MARK: - Table View DataSource & Delegate
-
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatItems.count + 2 // Including header and footer
