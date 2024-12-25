@@ -111,7 +111,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavbar()
-        setUpTableView()
+//        setUpTableView()
         setUpNotificationObservers()
     }
     
