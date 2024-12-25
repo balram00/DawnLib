@@ -1,17 +1,14 @@
 import UIKit
 
-class ColorNavigationViewController: UINavigationController {
+public class ColorNavigationViewController: UINavigationController {
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
-        
         setValue(CustomNavigationBar(frame: .zero), forKey: "navigationBar")
-
     }
     
-    override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         changeGradientImage()
     }
     
@@ -25,7 +22,7 @@ class ColorNavigationViewController: UINavigationController {
     // Gradient locations (optional, can be adjusted)
     let gradientLocations: [NSNumber] = [0.0, 0.5, 1.0]
 
-    lazy var colorView = { () -> UIView in
+    lazy var colorView: UIView = {
         let view = UIView()
         view.isUserInteractionEnabled = false
         navigationBar.addSubview(view)
@@ -33,7 +30,7 @@ class ColorNavigationViewController: UINavigationController {
         return view
     }()
     
-    func changeGradientImage() {
+    public func changeGradientImage() {
         let reducedHeight: CGFloat = 60 // Use the same value as your new navigation bar height
 
         // Adjust the colorView's frame based on the new height
@@ -89,9 +86,7 @@ class ColorNavigationViewController: UINavigationController {
         ).cgColor
     }
 
-
-    
-    func configNavigationBar() {
+    public func configNavigationBar() {
         navigationBar.barStyle = .default
         navigationBar.shadowImage = UIImage()
         navigationBar.isTranslucent = false
@@ -103,7 +98,7 @@ class ColorNavigationViewController: UINavigationController {
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
     
-    func gradientImage(withColours colours: [UIColor], location: [NSNumber], view: UIView) -> UIImage {
+    public func gradientImage(withColours colours: [UIColor], location: [NSNumber], view: UIView) -> UIImage {
         let gradient = CAGradientLayer()
         gradient.frame = view.bounds
         gradient.colors = colours.map { $0.cgColor }
@@ -114,12 +109,12 @@ class ColorNavigationViewController: UINavigationController {
         return UIImage.image(from: gradient) ?? UIImage()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 }
 
-extension UIColor {
+public extension UIColor {
     convenience init(rgb: Int) {
         self.init(
             red: CGFloat((rgb >> 16) & 0xFF),
@@ -127,11 +122,9 @@ extension UIColor {
             blue: CGFloat(rgb & 0xFF), alpha: 0.8
         )
     }
-    
-    // Hexadecimal initialization for UIColor
 }
 
-extension UIImage {
+public extension UIImage {
     class func image(from layer: CALayer) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(layer.bounds.size,
                                                layer.isOpaque, UIScreen.main.scale)
@@ -147,8 +140,8 @@ extension UIImage {
     }
 }
 
-class CustomNavigationBar: UINavigationBar {
-    override func sizeThatFits(_ size: CGSize) -> CGSize {
+public class CustomNavigationBar: UINavigationBar {
+    override public func sizeThatFits(_ size: CGSize) -> CGSize {
         var newSize = super.sizeThatFits(size)
         newSize.height = 60 // Set your desired height, e.g., 60
         return newSize
