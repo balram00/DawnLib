@@ -113,7 +113,13 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         setUpNavbar()
         setUpTableView()
         setUpNotificationObservers()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
+    
+    @objc func hideKeyboard() {
+          view.endEditing(true) // Dismiss the keyboard
+      }
     
     // MARK: - Setup Methods
     
