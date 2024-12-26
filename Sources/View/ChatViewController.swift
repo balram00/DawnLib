@@ -115,6 +115,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         setUpNotificationObservers()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
+        overrideUserInterfaceStyle = .light
     }
     
     @objc func hideKeyboard() {
