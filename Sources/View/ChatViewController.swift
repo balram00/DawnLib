@@ -538,7 +538,7 @@ extension ChatViewController: UITextViewDelegate {
         print(
             "Did end editing: \(textView.text ?? "")"
         )
-//        chatInputView.layer.borderColor = UIColor.clear.cgColor
+        chatInputView.layer.borderColor = UIColor.clear.cgColor
         
         if textView.text.isEmpty {
             textView.text = "Ask a question here"
