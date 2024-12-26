@@ -138,6 +138,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+//        chatInputView.backgroundColor = .white
         chatInputView.backgroundColor = .white
         chatInputView.layer.shadowColor = UIColor.black.cgColor
         chatInputView.layer.shadowOpacity = 0.5
@@ -145,6 +146,8 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         chatInputView.layer.shadowRadius = 10
         chatInputView.layer.borderWidth = 1
         chatInputView.layer.borderColor = UIColor.lightGray.cgColor
+        chatInputView.layer.cornerRadius = 10
+        chatInputView.clipsToBounds = false
     }
     
     @objc public func rightButtonTapped() {
@@ -275,9 +278,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             )
     }
     
-    @objc public func keyboardWillShow(
-        _ notification: Notification
-    ) {
+    @objc public func keyboardWillShow(_ notification: Notification){
         scrollToBottom() // Ensure it scrolls to the bottom
         if let keyboardFrame = (
             notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
@@ -298,9 +299,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    @objc public func keyboardWillHide(
-        _ notification: Notification
-    ) {
+    @objc public func keyboardWillHide(_ notification: Notification){
         // Reset the bottom constraint of the custom input view
         customInputViewBottomConstraint.constant = 0
         
@@ -517,7 +516,7 @@ extension ChatViewController: UITextViewDelegate {
         scrollToBottom()
         DispatchQueue.main
             .async {
-                self.chatInputView.layer.borderWidth = 2
+                self.chatInputView.layer.borderWidth = 1
                 self.chatInputView.layer.borderColor = UIColor(
                     hex: "#9d2872"
                 ).cgColor
@@ -525,6 +524,7 @@ extension ChatViewController: UITextViewDelegate {
                     hex: "#9d2872"
                 ).cgColor
                 self.sendButton.layer.cornerRadius = self.sendButton.frame.width / 2
+                self.chatInputView.layer.cornerRadius = 10
             }
         
         if textView.text == "Ask a question here" {
@@ -540,7 +540,7 @@ extension ChatViewController: UITextViewDelegate {
         print(
             "Did end editing: \(textView.text ?? "")"
         )
-        chatInputView.layer.borderColor = UIColor.clear.cgColor
+//        chatInputView.layer.borderColor = UIColor.clear.cgColor
         
         if textView.text.isEmpty {
             textView.text = "Ask a question here"
