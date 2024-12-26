@@ -17,29 +17,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="319" height="251"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZHi-ac-66g">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZHi-ac-66g">
                         <rect key="frame" x="0.0" y="0.0" width="319" height="251"/>
-                        <attributedString key="attributedText">
-                            <fragment content="Hi there ">
-                                <attributes>
-                                    <font key="NSFont" size="40" name="HelveticaNeue-Thin"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                </attributes>
-                            </fragment>
-                            <fragment content="👋">
-                                <attributes>
-                                    <font key="NSFont" size="40" name="AppleColorEmoji"/>
-                                    <font key="NSOriginalFont" size="40" name="HelveticaNeue-Thin"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                </attributes>
-                            </fragment>
-                            <fragment content="                 How can i help ?">
-                                <attributes>
-                                    <font key="NSFont" size="40" name="HelveticaNeue-Thin"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="40"/>
+                        <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>

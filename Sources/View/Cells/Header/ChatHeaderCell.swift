@@ -16,6 +16,8 @@ class ChatHeaderCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
 //        headingLabel.font = UIFont(name: "Roboto-regular", size: 40)
+        headingLabel?.text = "Hi there 👋\nHow can I help?"
+        headingLabel?.numberOfLines = 0
         headingLabel.applyCustomStyle(
             fontFamily: FontConstants.robotoRegular,
             fontSize: 40,
