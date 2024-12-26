@@ -144,8 +144,6 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         chatInputView.layer.shadowOpacity = 0.5
         chatInputView.layer.shadowOffset = CGSize(width: 5, height: 5)
         chatInputView.layer.shadowRadius = 10
-        chatInputView.layer.borderWidth = 1
-        chatInputView.layer.borderColor = UIColor.lightGray.cgColor
         chatInputView.layer.cornerRadius = 10
         chatInputView.clipsToBounds = false
     }
