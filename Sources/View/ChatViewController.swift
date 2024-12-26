@@ -136,6 +136,16 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             customView: rightButton
         )
     }
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        chatInputView.backgroundColor = .white
+        chatInputView.layer.shadowColor = UIColor.black.cgColor
+        chatInputView.layer.shadowOpacity = 0.5
+        chatInputView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        chatInputView.layer.shadowRadius = 10
+        chatInputView.layer.borderWidth = 1
+        chatInputView.layer.borderColor = UIColor.lightGray.cgColor
+    }
     
     @objc public func rightButtonTapped() {
         // Handle right button tap
