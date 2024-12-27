@@ -31,6 +31,9 @@
                                 <state key="normal">
                                     <imageReference key="image" image="hand.thumbsup" catalog="system" symbolScale="large"/>
                                 </state>
+                                <connections>
+                                    <action selector="likeTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="l1S-zb-WMf"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZrA-Ji-ADA">
                                 <rect key="frame" x="52.666666666666657" y="0.0" width="47.333333333333343" height="50"/>
@@ -40,6 +43,9 @@
                                 <state key="normal">
                                     <imageReference key="image" image="hand.thumbsdown" catalog="system" symbolScale="large"/>
                                 </state>
+                                <connections>
+                                    <action selector="disLikeTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MV0-xu-7aq"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -243,7 +249,9 @@
             <connections>
                 <outlet property="additionalFeedbackTextView" destination="24W-lx-rut" id="r6y-yx-bpg"/>
                 <outlet property="additionalFeedbackView" destination="EBv-z8-dQ2" id="MyZ-c3-Zc7"/>
+                <outlet property="disLikeButton" destination="ZrA-Ji-ADA" id="bfk-gN-9bN"/>
                 <outlet property="feedbackView" destination="dKw-m9-69g" id="qil-ym-w7n"/>
+                <outlet property="likeButton" destination="kJ9-vW-eKw" id="SPd-t4-fUE"/>
                 <outlet property="provideAdditionalFeedbackLabel" destination="te4-N1-QBe" id="QwK-XK-flo"/>
                 <outlet property="submitButton" destination="wsr-aU-4eV" id="ivP-zV-Ddb"/>
                 <outlet property="tellUsMoreLabel" destination="kIX-hy-hx5" id="Fct-uY-4xg"/>

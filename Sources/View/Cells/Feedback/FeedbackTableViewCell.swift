@@ -13,6 +13,8 @@ class FeedbackTableViewCell: UITableViewCell {
     
     @IBOutlet var feedbackButtons: [UIButton]!
     @IBOutlet var submitButton: UIButton!
+    @IBOutlet var likeButton: UIButton!
+    @IBOutlet var disLikeButton: UIButton!
     @IBOutlet var additionalFeedbackView: UIView!
     @IBOutlet var feedbackView: UIView!
     @IBOutlet var additionalFeedbackTextView: UITextView!
@@ -35,7 +37,7 @@ class FeedbackTableViewCell: UITableViewCell {
             button.applyCustomStyle(
                 fontFamily: "Arail",
                 fontSize: 16,
-                lineHeight: 23,
+                lineHeight: 40,
                 textColorHex: "#424243",
                 alignment: .left
             )
@@ -55,6 +57,32 @@ class FeedbackTableViewCell: UITableViewCell {
         })
         
         
+    }
+    
+    @IBAction func likeTapped(_ sender: UIButton) {
+        if disLikeButton.isSelected {
+            likeButton.backgroundColor = UIColor.palette.primaryColor
+            disLikeButton.backgroundColor = UIColor.palette.feedBackButtonColor
+        }else {
+            likeButton.backgroundColor = UIColor.palette.primaryColor
+        }
+        feedbackView.isHidden = true
+        likeButton.isSelected = true
+        likeButton.tintColor = .white
+        disLikeButton.tintColor = .black
+    }
+    
+    @IBAction func disLikeTapped(_ sender: UIButton) {
+        if likeButton.isSelected {
+            disLikeButton.backgroundColor = UIColor.palette.primaryColor
+            likeButton.backgroundColor = UIColor.palette.feedBackButtonColor
+        }else {
+            disLikeButton.backgroundColor = UIColor.palette.primaryColor
+        }
+        feedbackView.isHidden = false
+        disLikeButton.isSelected = true
+        disLikeButton.tintColor = .white
+        likeButton.tintColor = .black
     }
 
     @IBAction func didntProvideAnswerTapped(_ sender: UIButton) {

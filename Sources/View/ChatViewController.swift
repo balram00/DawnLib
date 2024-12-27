@@ -18,94 +18,8 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
 
     // Properties
     public var currentKeyboardFrame: CGRect?
-    var chatItems: [ChatItem] = [
-        ChatItem(
-            type: .question(
-                "What is your name?"
-            )
-        ),
-        ChatItem(
-            type: .question(
-                "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn."
-            )
-        ),
-        ChatItem(
-            type: .loader
-        ),
-        ChatItem(
-            type: .feedback
-        ),
-        ChatItem(
-            type: .question(
-                "What is your favorite color?"
-            )
-        ),
-        ChatItem(
-            type: .question(
-                "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn."
-            )
-        ),
-        ChatItem(
-            type: .answer(
-                "Blue is my favorite color."
-            )
-        ),
-        ChatItem(
-            type: .feedback
-        ),
-        ChatItem(
-            type: .bulletPoints(
-                points: [
-                    "You might encounter issues registering if myAir services are temporarily unavailable.",
-                    "It may be helpful to wait a few hours and then attempt to log in again.",
-                    "For further assistance with myAir, please contact our support team."
-                ],
-                underlineWords: [
-                    "myAir",
-                    "contact our support team"
-                ]
-            )
-        ),
-        ChatItem(
-            type: .question(
-                "What is your name?"
-            )
-        ),
-        ChatItem(
-            type: .question(
-                "What is your name?"
-            )
-        ),
-        ChatItem(
-            type: .question(
-                "What is your favorite color?"
-            )
-        ),
-        ChatItem(
-            type: .question(
-                "What is your name?"
-            )
-        ),
-        ChatItem(
-            type: .answer(
-                "Blue is my favorite color."
-            )
-        ),
-        ChatItem(
-            type: .bulletPoints(
-                points: [
-                    "You might encounter issues registering if myAir services are temporarily unavailable.",
-                    "It may be helpful to wait a few hours and then attempt to log in again.",
-                    "For further assistance with myAir, please contact our support team."
-                ],
-                underlineWords: [
-                    "myAir",
-                    "contact our support team"
-                ]
-            )
-        )
-    ]
-    
+    var chatItems: [ChatItem] = ChatData.chatItems
+
     // MARK: - Life Cycle
     
     public override func viewDidLoad() {
@@ -113,9 +27,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         setUpNavbar()
         setUpTableView()
         setUpNotificationObservers()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        view.addGestureRecognizer(tapGesture)
-        overrideUserInterfaceStyle = .light
+        setUpTapGuesture()
     }
     
     @objc func hideKeyboard() {
@@ -123,6 +35,12 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
       }
     
     // MARK: - Setup Methods
+    
+    func setUpTapGuesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        overrideUserInterfaceStyle = .light
+    }
     
     public func setUpNavbar() {
         // Use the helper methods to create the navbar components
@@ -338,13 +256,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             }
     }
-    
-    public func numberofsectionInTableView(
-        tableView: UITableView
-    ) -> Int {
-        return 1
-    }
-    
+
     // MARK: - Table View DataSource & Delegate
     
     public func tableView(
