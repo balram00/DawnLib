@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 class ChatViewModel {
@@ -15,23 +16,82 @@ class ChatViewModel {
     var feedbackOthersSelected = false
     var isFeedbackViewIsOpened: Bool = false
     var feedBackIndexDict: [Int: FeedbackType] = [:]
+    var ResponseIndexDict: [Int: Bool] = [:]
+    var jsonResponse: [Response]?
     
-    required init() {}
-    
-    func addingAnswerItem(answer: String) {
-        chatItems.append(ChatItem( type: .answer(answer)))
-        chatItems.append(ChatItem( type: .loader))
-        chatItems.append(ChatItem(type: .bulletPoints(points:  ["Air escaping from your mask or tubing can affect your therapy. If you notice this happening, don't worry 2014small adjustments or a different mask myAir can usually solve the problem.\n A breathing therapy device that delivers air to a mask worn over the nose and/or mouth to help consistent breathing.\n It's used primarily for sleep apnea.\n Air escaping from your mask or tubing can affect your therapy. If you notice this happening, don't worry 2014small adjustments or a different mask can usually solve the problem.\n A breathing therapy device that delivers air to a mask worn over the nose and/or mouth to help consistent breathing.\n It's used primarily for sleep apnea. contact our support team"], underlineWords: [  "myAir","contact our support team","apnea"],boldWords:["breathing","2014small"])))
-        chatItems.append(ChatItem(type: .feedback))
+    required init() {
+        jsonResponse = [Response(question: "How I always wake up tired. What should I do?",type:.question),Response(question: "What should I do if my CPAP isn\'t working?",type: .question),Response(question: "What do I do when I can’t register my device with myAir?",type: .question),Response(question: "I’d like to submit a complaint.",type: .question)]
     }
+    
+    func addingLoader() {
+        jsonResponse?.append(Response( type: .loader))
+    }
+    
+    func loadJSONFile() -> URL? {
+            if let url = Bundle.main.url(forResource: "JsonData", withExtension: "json") {
+                return url
+            }
+            
+            let filePath = "/Users/bitcot/Desktop/DawnLib-Test/DawnLib-Test/JsonData.json"
+            let fileURL = URL(fileURLWithPath: filePath)
+            
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                return fileURL
+            }
+            
+            return nil
+        }
+
+        // Function to fetch and display data
+        func fetchDataAndDisplay(question: String?) {
+            // Load JSON file
+//            print("Bundle URL: \(Bundle.main.url(forResource: "JsonData", withExtension: "json") ?? URL(string: "nil")!)")
+//            print("File Path: \(fileURL.path)")
+//            print("File Exists: \(FileManager.default.fileExists(atPath: fileURL.path))")
+
+            guard let fileURL = loadJSONFile() else {
+                print("JSON file not found.")
+                return
+            }
+
+            do {
+                // Read the file data
+                let jsonData = try Data(contentsOf: fileURL)
+
+                // Decode the JSON data into Response objects
+                let responses = try JSONDecoder().decode([Response].self, from: jsonData)
+               
+
+                // Filter responses based on the question
+                if let matchedResponse = responses.first(where: { $0.question?.lowercased() == question?.lowercased() }) {
+                    // If a matching question is found, display the response
+                    
+                    displayData(matchedResponse)
+                } else {
+                    print("No matching question found.")
+                }
+            } catch {
+                print("Error loading or decoding JSON: \(error.localizedDescription)")
+            }
+        }
+
+        func displayData(_ response: Response) {
+
+            jsonResponse?.append(Response(question:response.question, type:.answer))
+            
+            jsonResponse?.append(Response(type: .bulletPoints, bulletPoints: response.response?.message?.text ?? [], underlineWords: response.response?.message?.underLineText ?? [] ))
+            jsonResponse?.append(Response(type:.feedback))
+            
+            if let relatedQuestion = response.response?.message?.related_questions?.first?.data {
+                jsonResponse?.append(Response(type:.empty))
+                jsonResponse?.append(Response(question:relatedQuestion, type:.question))
+                jsonResponse?.append(Response(type:.empty))
+            }else {
+                jsonResponse?.append(Response(type:.empty))
+            }
+
+        }
 }
 
 
 
-//MARK: - markDown text 
-
-
-//chatItems.append(ChatItem( type: .answer(answer)))
-//chatItems.append(ChatItem( type: .loader))
-//chatItems.append(ChatItem(type: .bulletPoints(points:  ["Air escaping from your mask or tubing can affect your therapy. If you notice this happening, don't worry, **small adjustments** or a different mask *can usually solve the problem*.  A breathing therapy device that delivers air to a mask worn over the nose and/or mouth to help consistent breathing.It's used primarily for sleep apnea.Air escaping from your mask or tubing can affect your therapy. If you notice this happening, don't worry, **small adjustments** or a different mask *can usually solve the problem*.A breathing therapy device that delivers air to a mask worn over the nose and/or mouth to help consistent breathing.It's used primarily for sleep apnea.[Contact our support team](#)"], underlineWords: [  "myAir","contact our support team","apnea"],boldWords:["breathing","2014small"])))
-//chatItems.append(ChatItem(type: .feedback))

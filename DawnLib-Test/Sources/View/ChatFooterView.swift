@@ -15,30 +15,31 @@ class ChatFooterView: UIView {
     
     override func awakeFromNib() {
            super.awakeFromNib()
-        configure(with: "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.", underlinedText: "Things you should know about Dawn")
+//        configure(with: "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.", underlinedText: "Things you should know about Dawn")
        }
     
     class func load(frame: CGRect) -> ChatFooterView {
         let view = Bundle.main.loadNibNamed("ChatFooterView", owner: self, options: nil)?.first as! ChatFooterView
         view.frame = frame
+        view.configure()
         return view
     }
 
-    func configure(with text: String, underlinedText: String) {
+    func configure(with text: String? = "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.", underlinedText: String? = "Things you should know about Dawn") {
         guard let footerTextLabel = footerTextLabel else {
             print("Error: footerTextLabel is nil")
             return
         }
         
         // Split the text by period and add a new line after each sentence.
-        let textWithNewLines = text.split(separator: ".").map { $0 + "." }.joined(separator: "\n")
+        let textWithNewLines = text?.split(separator: ".").map { $0 + "." }.joined(separator: "\n") ?? ""
         
         // Create the attributed string
         let attributedString = NSMutableAttributedString(string: textWithNewLines)
         
         // Find the range of the text to underline
-        if let range = text.range(of: underlinedText) {
-            let nsRange = NSRange(range, in: text)
+        if let range = text?.range(of: underlinedText ?? "") {
+            let nsRange = NSRange(range, in: text ?? "")
             
             // Add underline attribute to the specified range
             attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
@@ -47,6 +48,7 @@ class ChatFooterView: UIView {
         // Update the label's attributed text on the main thread
         DispatchQueue.main.async {
             footerTextLabel.attributedText = attributedString
+        
         }
     }
 }

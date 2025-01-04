@@ -33,15 +33,17 @@ class QuestionTableViewCell: UITableViewCell {
         questionView.layer.masksToBounds = true
         messageImage.layer.cornerRadius = messageImage.frame.size.height / 2
         questionLabel.applyCustomStyle(
-            fontFamily: FontConstants.robotoLight,
+            fontFamily: FontConstants.arail,
             fontSize: FontSize.regular.rawValue,
             lineHeight: 23,
             alignment: .left
         )
         questionLabel.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
-        questionLabel.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+//        questionLabel.addGestureRecognizer(tapGesture)
       }
+    
+
     
     @objc func labelTapped(_ sender: UITapGestureRecognizer) {
         if let delagate {

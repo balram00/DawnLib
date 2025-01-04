@@ -41,7 +41,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZrA-Ji-ADA">
                                 <rect key="frame" x="60" y="0.0" width="50" height="50"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" name="FeedBackButtonColor"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal">
@@ -62,11 +62,11 @@
                         <rect key="frame" x="30" y="90" width="985" height="530"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tell us more :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIX-hy-hx5">
-                                <rect key="frame" x="10" y="10" width="100.33333333333333" height="30"/>
+                                <rect key="frame" x="10" y="10" width="95.333333333333329" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="B1b-5o-qXp"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -89,92 +89,104 @@
                                 <rect key="frame" x="0.0" y="50" width="985" height="480"/>
                                 <subviews>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="itF-EI-lyE">
-                                        <rect key="frame" x="20" y="10" width="185.66666666666666" height="40"/>
+                                        <rect key="frame" x="20" y="10" width="174" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Wka-02-iTc"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Didn't proved answer"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Didn't proved answer">
+                                            <fontDescription key="titleFontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                        </buttonConfiguration>
                                         <connections>
-                                            <action selector="didntProvideAnswerTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="KDO-cQ-YXO"/>
+                                            <action selector="didNotProvideAnswerTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Cea-8K-KAk"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QnX-hm-kF3">
-                                        <rect key="frame" x="20" y="60" width="117" height="40"/>
+                                        <rect key="frame" x="19.999999999999993" y="60" width="110.33333333333331" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="AG5-mt-6d0"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Not relevent"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Not relevent">
+                                            <fontDescription key="titleFontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                        </buttonConfiguration>
                                         <connections>
-                                            <action selector="notRelevantTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TKE-qR-GbG"/>
+                                            <action selector="notRelevantTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="B5p-8o-cTr"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tX-aq-g2q">
-                                        <rect key="frame" x="147" y="60" width="179.66666666666663" height="40"/>
+                                        <rect key="frame" x="140.33333333333337" y="60" width="165.66666666666663" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="9iy-m1-MRH"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Not facutally correct"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Not facutally correct">
+                                            <fontDescription key="titleFontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                        </buttonConfiguration>
                                         <connections>
-                                            <action selector="notFactuallyCorrectTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="kli-Kp-A6r"/>
+                                            <action selector="notFactuallyCorrectTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wIu-ah-A3e"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pW5-SB-dyb">
-                                        <rect key="frame" x="20" y="110" width="187" height="40"/>
+                                        <rect key="frame" x="20" y="110" width="175.66666666666666" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="8j9-9u-OK5"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Didn't like the answer"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Didn't like the answer">
+                                            <fontDescription key="titleFontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                        </buttonConfiguration>
                                         <connections>
-                                            <action selector="didntLikeAnswerTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="PhZ-NR-2pw"/>
+                                            <action selector="didNotLikeTheAnswerTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="aal-T9-Aln"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaH-TC-dPr">
-                                        <rect key="frame" x="20" y="160" width="169.33333333333334" height="40"/>
+                                        <rect key="frame" x="20" y="160" width="157" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="4eH-1V-GUw"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Didb't like the style"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Didb't like the style">
+                                            <fontDescription key="titleFontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                        </buttonConfiguration>
                                         <connections>
-                                            <action selector="didntLikeStyleTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NoT-tQ-5pb"/>
+                                            <action selector="didNotLikeTheStyleTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YK3-ZC-kiZ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qoC-Rt-lhX">
-                                        <rect key="frame" x="199.33333333333334" y="160" width="75.666666666666657" height="40"/>
+                                        <rect key="frame" x="187" y="160" width="72.333333333333314" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="tQl-s5-Oto"/>
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Others"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Others">
+                                            <fontDescription key="titleFontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                        </buttonConfiguration>
                                         <connections>
-                                            <action selector="othersTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="6OP-Xl-hdU"/>
+                                            <action selector="othersTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Q8n-hQ-4LQ"/>
                                         </connections>
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EBv-z8-dQ2">
                                         <rect key="frame" x="10" y="220" width="965" height="200"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide additional feedback :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="te4-N1-QBe">
-                                                <rect key="frame" x="5" y="20" width="220" height="35"/>
+                                                <rect key="frame" x="5" y="20" width="205.66666666666666" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="VEU-9k-5ky"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -182,7 +194,7 @@
                                                 <rect key="frame" x="5" y="65" width="955" height="115"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
@@ -198,15 +210,19 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsr-aU-4eV">
-                                        <rect key="frame" x="885" y="430" width="90" height="40"/>
+                                        <rect key="frame" x="901" y="430" width="74" height="40"/>
                                         <color key="backgroundColor" name="PrimaryColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="9jx-ga-k2E"/>
-                                            <constraint firstAttribute="width" constant="90" id="AjM-Tv-J5V"/>
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Submit"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Submit">
+                                            <fontDescription key="titleFontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="submitTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="E4p-ff-Vjj"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -243,15 +259,37 @@
                             <constraint firstAttribute="trailing" secondItem="6A4-Wa-BZF" secondAttribute="trailing" constant="10" id="gfz-Nx-j5g"/>
                         </constraints>
                     </view>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9dE-la-05g">
+                        <rect key="frame" x="30" y="90" width="985" height="80"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="     Thank you for the feedback!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qiQ-0W-BBi">
+                                <rect key="frame" x="0.0" y="0.0" width="985" height="80"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="FeedBackBGColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qiQ-0W-BBi" secondAttribute="trailing" id="51h-uH-kpx"/>
+                            <constraint firstItem="qiQ-0W-BBi" firstAttribute="leading" secondItem="9dE-la-05g" secondAttribute="leading" id="E3V-sQ-kDT"/>
+                            <constraint firstItem="qiQ-0W-BBi" firstAttribute="top" secondItem="9dE-la-05g" secondAttribute="top" id="Glq-np-IRZ"/>
+                            <constraint firstAttribute="height" constant="80" id="JaF-tn-8xG"/>
+                            <constraint firstAttribute="bottom" secondItem="qiQ-0W-BBi" secondAttribute="bottom" id="bGa-Bb-fbx"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="XxC-7d-VYx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="1gW-gx-yHf"/>
                     <constraint firstItem="XxC-7d-VYx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="7Ag-Qx-9yE"/>
+                    <constraint firstItem="9dE-la-05g" firstAttribute="top" secondItem="XxC-7d-VYx" secondAttribute="bottom" constant="30" id="PgM-rf-YBA"/>
                     <constraint firstAttribute="bottomMargin" secondItem="dKw-m9-69g" secondAttribute="bottom" constant="10" id="U12-rt-oen"/>
                     <constraint firstItem="dKw-m9-69g" firstAttribute="top" secondItem="XxC-7d-VYx" secondAttribute="bottom" constant="30" id="YZB-T3-vwH"/>
+                    <constraint firstItem="9dE-la-05g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="eht-hN-ake"/>
                     <constraint firstItem="dKw-m9-69g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="nfz-Ch-4ga"/>
                     <constraint firstAttribute="trailingMargin" secondItem="dKw-m9-69g" secondAttribute="trailing" constant="10" id="sG7-dG-7HH"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="9dE-la-05g" secondAttribute="trailing" constant="10" id="yir-d2-iTR"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -265,12 +303,14 @@
                 <outlet property="provideAdditionalFeedbackLabel" destination="te4-N1-QBe" id="C9l-QS-7TT"/>
                 <outlet property="submitButton" destination="wsr-aU-4eV" id="BpM-Py-SH3"/>
                 <outlet property="tellUsMoreLabel" destination="kIX-hy-hx5" id="ihs-d8-OMS"/>
+                <outlet property="thankYouView" destination="9dE-la-05g" id="itk-qO-on2"/>
                 <outletCollection property="feedbackButtons" destination="itF-EI-lyE" collectionClass="NSMutableArray" id="uk4-aP-Fus"/>
                 <outletCollection property="feedbackButtons" destination="9tX-aq-g2q" collectionClass="NSMutableArray" id="lQI-dy-KYs"/>
                 <outletCollection property="feedbackButtons" destination="pW5-SB-dyb" collectionClass="NSMutableArray" id="Y3C-1E-v8L"/>
                 <outletCollection property="feedbackButtons" destination="QnX-hm-kF3" collectionClass="NSMutableArray" id="53g-5x-RmB"/>
                 <outletCollection property="feedbackButtons" destination="oaH-TC-dPr" collectionClass="NSMutableArray" id="P9B-2X-tq1"/>
                 <outletCollection property="feedbackButtons" destination="qoC-Rt-lhX" collectionClass="NSMutableArray" id="2XB-nP-bjF"/>
+                <outletCollection property="feedbackButtons" destination="qoC-Rt-lhX" collectionClass="NSMutableArray" id="HH5-e5-R2i"/>
             </connections>
             <point key="canvasLocation" x="535.1145038167939" y="229.22535211267606"/>
         </tableViewCell>
@@ -279,6 +319,9 @@
         <image name="disLikeBlack" width="20" height="20"/>
         <image name="likeBlack" width="20" height="20"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
+        <namedColor name="FeedBackBGColor">
+            <color red="1" green="0.99215686274509807" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="FeedBackButtonColor">
             <color red="0.95294117647058818" green="0.97254901960784312" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

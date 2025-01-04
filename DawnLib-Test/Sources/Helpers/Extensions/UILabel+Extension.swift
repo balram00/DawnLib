@@ -1,64 +1,67 @@
 import UIKit
 extension  UILabel {
-
     func applyCustomStyle(
         fontFamily: String = "System",
         fontSize: CGFloat = 14.0,
         fontWeight: UIFont.Weight = .regular,
         lineHeight: CGFloat? = nil,
-        textColorHex: UIColor? = UIColor.black,
+        textColorHex: UIColor? = UIColor.palette.textColor,
         alignment: NSTextAlignment = .left,
-        underlineText: [String] = [],
-        boldPoints: [String] = []
+        underlineText: [String] = []
     ) {
-        self.textAlignment = alignment
-        self.textColor = textColorHex ?? UIColor.black
+        guard let text = self.text else {
+            print("No text available to style.")
+            return
+        }
         
-        // Configure font
+        // Normalize text and the words to underline (case insensitive)
+        let normalizedText = text.lowercased()
+        let normalizedUnderlineText = underlineText.map { $0.lowercased().trimmingCharacters(in: .whitespaces) }
+
+        // Set up the font and paragraph style
         let font: UIFont
         if let customFont = UIFont(name: fontFamily, size: fontSize), fontFamily != "System" {
-            let fontDescriptor = customFont.fontDescriptor
-            let weightedFontDescriptor = fontDescriptor.addingAttributes([
-                .traits: [UIFontDescriptor.TraitKey.weight: fontWeight]
-            ])
-            font = UIFont(descriptor: weightedFontDescriptor, size: fontSize)
+            font = customFont
         } else {
             font = UIFont.systemFont(ofSize: fontSize, weight: fontWeight)
         }
         
-        if let text = self.text {
-            // Configure paragraph style
-            let paragraphStyle = NSMutableParagraphStyle()
-            if let lineHeight = lineHeight {
-                paragraphStyle.lineHeightMultiple = lineHeight / fontSize
-            }
-            paragraphStyle.alignment = alignment
-            
-            // Create attributed string
-            let attributedString = NSMutableAttributedString(string: text)
-            let fullRange = NSRange(location: 0, length: text.count)
-            
-            // Apply base attributes
-            attributedString.addAttributes([
-                .font: font,
-                .paragraphStyle: paragraphStyle,
-                .foregroundColor: textColorHex ?? UIColor.black
-            ], range: fullRange)
-            
-            // Apply underline style
-            for word in underlineText {
-                let wordRange = (text as NSString).range(of: word)
-                if wordRange.location != NSNotFound {
-                    attributedString.addAttributes([
-                        .underlineStyle: NSUnderlineStyle.single.rawValue,
-                        .foregroundColor: UIColor.primary // Example color
-                    ], range: wordRange)
-                }
-            }
-            // Set the attributed string to the label
-            self.attributedText = attributedString
+        let paragraphStyle = NSMutableParagraphStyle()
+        if let lineHeight = lineHeight {
+            paragraphStyle.lineHeightMultiple = lineHeight / fontSize
         }
+        paragraphStyle.alignment = alignment
+
+        // Create a mutable attributed string for the text
+        let attributedString = NSMutableAttributedString(string: text)
+        let fullRange = NSRange(location: 0, length: text.utf16.count)
+
+        // Apply base text attributes (font, paragraph style, color)
+        attributedString.addAttributes([
+            .font: font,
+            .paragraphStyle: paragraphStyle,
+            .foregroundColor: textColorHex ?? UIColor.palette.textColor
+        ], range: fullRange)
+
+        // Loop through the words to underline
+        for word in normalizedUnderlineText {
+            let nsRange = (text as NSString).range(of: word) // Get the range of the word in the text
+            if nsRange.location != NSNotFound {
+                // Apply underline to the word
+                attributedString.addAttributes([
+                    .underlineStyle: NSUnderlineStyle.single.rawValue,
+                    .foregroundColor: UIColor.primary // Change this color if needed
+                ], range: nsRange)
+                print("Underlining word: '\(word)' at range: \(nsRange)")
+            } else {
+                print("Word not found for underlining: '\(word)'")
+            }
+        }
+
+        // Set the attributed string with styles applied to the label
+        self.attributedText = attributedString
     }
+
 
     
     func addGradientLineToWord(_ wordRange: NSRange, text: String) {

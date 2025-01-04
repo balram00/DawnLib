@@ -1,14 +1,6 @@
-//
-//  FeedbackTableViewCell.swift
-//  Sample POC
-//
-//  Created by bitcot on 23/12/24.
-//
-
 import UIKit
-
 protocol FeedbackTableViewCellDelegate: AnyObject {
-    func didTapOthersButton(in cell: FeedbackTableViewCell)
+    func didTapFeedbackButton(in cell: FeedbackTableViewCell, newStatus: FeedbackType)
 }
 
 class FeedbackTableViewCell: UITableViewCell {
@@ -16,17 +8,20 @@ class FeedbackTableViewCell: UITableViewCell {
     static let identifier: String = "FeedbackTableViewCell"
     weak var delegate: FeedbackTableViewCellDelegate?
     
+    // Existing IBOutlets
     @IBOutlet var feedbackButtons: [UIButton]!
     @IBOutlet var submitButton: UIButton!
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var disLikeButton: UIButton!
     @IBOutlet var additionalFeedbackView: UIView!
+    @IBOutlet var thankYouView: UIView!
     @IBOutlet var feedbackView: UIView!
     @IBOutlet var othersFeedbackButton: UIButton!
     @IBOutlet var additionalFeedbackTextView: UITextView!
     @IBOutlet var tellUsMoreLabel: UILabel!
     @IBOutlet var provideAdditionalFeedbackLabel: UILabel!
     
+    // Instance variables
     var index: IndexPath?
     var feedBackIndexDict: [Int: FeedbackType] = [:]
     var isAdditisonalFeedbackVisible = false
@@ -35,13 +30,13 @@ class FeedbackTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        startingSetUp()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let iconImage = UIImage(named: "disLike")?.withRenderingMode(.alwaysTemplate) // Ensures icon is tinted
-        submitButton.setImage(iconImage, for: .normal)
-
+        
+        // Styling buttons and views
         submitButton.layer.cornerRadius = submitButton.frame.height / 2
         disLikeButton.layer.cornerRadius = disLikeButton.frame.height / 2
         likeButton.layer.cornerRadius = likeButton.frame.height / 2
@@ -49,7 +44,7 @@ class FeedbackTableViewCell: UITableViewCell {
         feedbackButtons.forEach { button in
             button.layer.cornerRadius = button.frame.height / 2
             button.applyCustomStyle(
-                fontFamily:FontConstants.arail,
+                fontFamily: FontConstants.arail,
                 fontSize: FontSize.regular.rawValue,
                 lineHeight: 40,
                 textColorHex: "#424243",
@@ -62,149 +57,128 @@ class FeedbackTableViewCell: UITableViewCell {
             view.layer.borderColor = UIColor.lightGray.cgColor
         }
     }
-
+    
     //MARK: - Actions
     
     @IBAction func likeTapped(_ sender: UIButton) {
-        updatingLikeDislikeButtonBGColor(senderButton: "like")
-
-//        changingStatus(status: .liked)
-//        likeButton.isSelected = true
-//        disLikeButton.isSelected = false
-//        feedbackView.isHidden = true
-//        additionalFeedbackView.isHidden = true
-//        likeButton.backgroundColor = likeButton.isSelected ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-//        disLikeButton.backgroundColor = disLikeButton.isSelected ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-//        likeButton.setImage(likeButton.isSelected ? UIImage(named: "likeWhite") : UIImage(named: "likeBlack"), for: .normal)
-//        disLikeButton.setImage(UIImage(named: "disLikeBlack"), for: .normal)
-//        likeButton.tintColor = .white
-//        disLikeButton.tintColor = .black
-//        delegate?.didTapOthersButton(in: self)
+        updatingLikeDislikeButtonBGColor(state: .like)
+        delegate?.didTapFeedbackButton(in: self, newStatus: .liked)
     }
     
     @IBAction func disLikeTapped(_ sender: UIButton) {
-        updatingLikeDislikeButtonBGColor(senderButton: "dislike")
-//        changingStatus(status: .feedback)
-//        disLikeButton.isSelected = true
-//        likeButton.isSelected = false
-//        feedbackView.isHidden = false
-//        disLikeButton.backgroundColor = disLikeButton.isSelected ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-//        disLikeButton.setImage(disLikeButton.isSelected ? UIImage(named: "disLikeWhite") : UIImage(named: "disLikeBlack"), for: .normal)
-//        likeButton.setImage(UIImage(named: "likeBlack"), for: .normal)
-//
-//        likeButton.backgroundColor = likeButton.isSelected ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-//        disLikeButton.tintColor = .white
-//        likeButton.tintColor = .black
-//        
-//        delegate?.didTapOthersButton(in: self)
-    }
-    
-    @IBAction func didntProvideAnswerTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        updateButtonBackgroundColor(sender)
-//        delegate?.didTapOthersButton(in: self)
-    }
-    
-    @IBAction func notRelevantTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        updateButtonBackgroundColor(sender)
-//        delegate?.didTapOthersButton(in: self)
-    }
-    
-    @IBAction func notFactuallyCorrectTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        updateButtonBackgroundColor(sender)
-//        delegate?.didTapOthersButton(in: self)
-    }
-    
-    @IBAction func didntLikeAnswerTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        updateButtonBackgroundColor(sender)
-//        delegate?.didTapOthersButton(in: self)
-    }
-    
-    @IBAction func didntLikeStyleTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        updateButtonBackgroundColor(sender)
-//        delegate?.didTapOthersButton(in: self)
+        updatingLikeDislikeButtonBGColor(state: .dislike)
+        delegate?.didTapFeedbackButton(in: self, newStatus: .feedback)
     }
     
     @IBAction func closeTapped(_ sender: UIButton) {
-        startingSetUp()
-        delegate?.didTapOthersButton(in: self)
+        closedFeedback()
+        delegate?.didTapFeedbackButton(in: self, newStatus: .closed)
     }
     
+    @IBAction func didNotProvideAnswerTapped(_ sender: UIButton) {
+        updateButtonBackgroundColor(sender)
+    }
+    
+    @IBAction func notRelevantTapped(_ sender: UIButton) {
+        updateButtonBackgroundColor(sender)
+    }
+    
+    @IBAction func notFactuallyCorrectTapped(_ sender: UIButton) {
+        updateButtonBackgroundColor(sender)
+    }
+    
+    @IBAction func didNotLikeTheAnswerTapped(_ sender: UIButton) {
+        updateButtonBackgroundColor(sender)
+    }
+    
+    @IBAction func didNotLikeTheStyleTapped(_ sender: UIButton) {
+        updateButtonBackgroundColor(sender)
+    }
+
     @IBAction func othersTapped(_ sender: UIButton) {
         selectedOtherFeedback()
     }
     
-    //MARK: - Funtions
-    
-    func startingSetUp() {
-        changingStatus(status: .closed)
-        feedbackView.isHidden = true
-        likeButton.backgroundColor = UIColor.palette.feedBackButtonColor
-        disLikeButton.backgroundColor = UIColor.palette.feedBackButtonColor
-        likeButton.setImage(UIImage(named: "likeBlack"), for: .normal)
-        disLikeButton.setImage(UIImage(named: "disLikeBlack"), for: .normal)
+    @IBAction func submitTapped(_ sender: UIButton) {
+        submitButton.setTitle("Please wait ..", for: .normal)
+        self.isUserInteractionEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            // Trigger the delegate action after the delay
+            self.delegate?.didTapFeedbackButton(in: self, newStatus: .disliked)
+        }
     }
     
-    func updatingLikeDislikeButtonBGColor(senderButton:String) {
-        changingStatus(status: senderButton == "like" ? .liked : .feedback)
-        likeButton.isSelected = senderButton == "like" ? true : false
-        disLikeButton.isSelected = senderButton == "dislike" ? true : false
-        feedbackView.isHidden = senderButton == "like" ? true : false
-//      additionalFeedbackView.isHidden = senderButton == "like" ? true : nil
-        disLikeButton.isSelected = senderButton == "dislike" ? true : false
-        likeButton.backgroundColor = senderButton == "like" ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-        disLikeButton.backgroundColor = senderButton == "dislike" ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-        likeButton.setImage(senderButton == "like" ? UIImage(named: "likeWhite") : UIImage(named: "likeBlack"), for: .normal)
-        disLikeButton.setImage(senderButton == "dislike" ?  UIImage(named: "disLikeWhite") : UIImage(named: "disLikeBlack"), for: .normal)
-        delegate?.didTapOthersButton(in: self)
-        
-//        if senderButton == "like" {
-//            changingStatus(status: .liked)
-//            likeButton.isSelected = true
-//            disLikeButton.isSelected = false
-//            feedbackView.isHidden = true
-//            additionalFeedbackView.isHidden = true
-//            likeButton.backgroundColor = likeButton.isSelected ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-//            disLikeButton.backgroundColor = disLikeButton.isSelected ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-//            likeButton.setImage(likeButton.isSelected ? UIImage(named: "likeWhite") : UIImage(named: "likeBlack"), for: .normal)
-//            disLikeButton.setImage(UIImage(named: "disLikeBlack"), for: .normal)
-//            delegate?.didTapOthersButton(in: self)
-//        }else {
-//            changingStatus(status: .feedback)
-//            disLikeButton.isSelected = true
-//            likeButton.isSelected = false
-//            feedbackView.isHidden = false
-//            disLikeButton.backgroundColor = disLikeButton.isSelected ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-//            disLikeButton.setImage(disLikeButton.isSelected ? UIImage(named: "disLikeWhite") : UIImage(named: "disLikeBlack"), for: .normal)
-//            likeButton.setImage(UIImage(named: "likeBlack"), for: .normal)
-//
-//            likeButton.backgroundColor = likeButton.isSelected ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
-//
-//            
-//            delegate?.didTapOthersButton(in: self)
-//        }
+    //MARK: - Functions
+    func startingSetUp() {
+        thankYouView.layer.cornerRadius = 10
+        feedbackView.isHidden = true
+        additionalFeedbackView.isHidden = true
+        thankYouView.isHidden = true
+        likeButton.backgroundColor = UIColor.palette.feedBackButtonColor
+        disLikeButton.backgroundColor = UIColor.palette.feedBackButtonColor
+        likeButton.setImage(ConstantImage.likeBlack, for: .normal)
+        disLikeButton.setImage(ConstantImage.dislikeBlack, for: .normal)
+        feedbackButtons.forEach { button in
+            button.layer.backgroundColor = UIColor.palette.feedBackButtonColor.cgColor
+        }
+        othersFeedbackButton.tintColor = .black
+        submitButton.layer.backgroundColor = UIColor.palette.primaryColor.cgColor
+    }
+    
+    func updatingLikeDislikeButtonBGColor(state: ButtonState) {
+        likeButton.isSelected = state == .like ? true : false
+        disLikeButton.isSelected = state == .dislike ? true : false
+        feedbackView.isHidden = state == .like ? true : false
+        disLikeButton.isSelected = state == .dislike ? true : false
+        likeButton.backgroundColor = state == .like ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
+        disLikeButton.backgroundColor = state == .dislike ? UIColor.palette.primaryColor : UIColor.palette.feedBackButtonColor
+        likeButton.setImage(state == .like ? ConstantImage.likeWhite : ConstantImage.likeBlack, for: .normal)
+        disLikeButton.setImage(state == .dislike ? ConstantImage.dislikeWhite : ConstantImage.dislikeBlack, for: .normal)
+    }
+    
+    func closedFeedback() {
+        likeButton.isSelected = false
+        disLikeButton.isSelected = false
+        likeButton.backgroundColor = UIColor.palette.feedBackButtonColor
+        disLikeButton.backgroundColor = UIColor.palette.feedBackButtonColor
+        likeButton.setImage(ConstantImage.likeBlack, for: .normal)
+        disLikeButton.setImage(ConstantImage.dislikeBlack, for: .normal)
     }
     
     func screenSetup() {
-        feedBackIndexDict.forEach({ (key,value) in
+        self.isUserInteractionEnabled = true
+        feedBackIndexDict.forEach({ (key, value) in
+            print("key and value",key, value)
             if index?.row == key {
                 switch value {
                 case .closed:
                     feedbackView.isHidden = true
+                    thankYouView.isHidden = true
                     additionalFeedbackView.isHidden = true
+                    closedFeedback()
                     
                 case .feedback:
                     feedbackView.isHidden = false
+                    thankYouView.isHidden = true
                     additionalFeedbackView.isHidden = true
+                    updatingLikeDislikeButtonBGColor(state: .dislike)
                     
                 case .othersFeedback:
                     feedbackView.isHidden = false
+                    thankYouView.isHidden = true
                     additionalFeedbackView.isHidden = false
+                    selectedOtherFeedback()
+                    
                 case .liked:
+                    feedbackView.isHidden = true
+                    additionalFeedbackView.isHidden = true
+                    thankYouView.isHidden = false
+                    updatingLikeDislikeButtonBGColor(state: .like)
+                case .disliked:
+                    feedbackView.isHidden = true
+                    additionalFeedbackView.isHidden = true
+                    thankYouView.isHidden = false
+                    updatingLikeDislikeButtonBGColor(state: .dislike)
                     feedbackView.isHidden = true
                     additionalFeedbackView.isHidden = true
                 }
@@ -214,45 +188,29 @@ class FeedbackTableViewCell: UITableViewCell {
     
     func selectedOtherFeedback() {
         additionalFeedbackView.isHidden = false
-        othersFeedbackButton.isSelected = true
-        feedbackButtons.forEach { button in
-            button.backgroundColor = UIColor.palette.feedBackButtonColor
-            button.tintColor = .black
-        }
-        changingStatus(status: .othersFeedback)
-        delegate?.didTapOthersButton(in: self)
+        othersFeedbackButton.backgroundColor = UIColor.palette.primaryColor
+        othersFeedbackButton.tintColor = .white
+        delegate?.didTapFeedbackButton(in: self, newStatus: .othersFeedback)
+
     }
     
     func updateButtonBackgroundColor(_ button: UIButton) {
-        submitButton.backgroundColor = UIColor.palette.feedBackButtonColor
-        changingStatus(status: .feedback)
+        if additionalFeedbackView.isHidden == false {
+            additionalFeedbackView.isHidden = true
+            delegate?.didTapFeedbackButton(in: self, newStatus: .feedback)
+        }
         let isCurrentlySelected = button.backgroundColor == UIColor.palette.primaryColor
         
         if isCurrentlySelected {
-            button.backgroundColor = UIColor.palette.feedBackButtonColor
+            button.backgroundColor = UIColor.palette.feedBackButtonColor.withAlphaComponent(1)
             button.tintColor = .black
             selectedFeedbackCount -= 1
         } else {
-            // Ensure the selection limit is not exceeded
-            guard selectedFeedbackCount < 3 else {
-                return  }
-            
-            // Select the button
-            button.backgroundColor = UIColor.palette.primaryColor
+            guard selectedFeedbackCount < 3 else { return }
+            button.backgroundColor = UIColor.palette.primaryColor.withAlphaComponent(1)
             button.tintColor = .white
             selectedFeedbackCount += 1
         }
+        
     }
-
-
-    
-    func changingStatus(status: FeedbackType) {
-        if let index = index?.row {
-            feedBackIndexDict[index] = status
-        }
-    }
-    
 }
-
-
-

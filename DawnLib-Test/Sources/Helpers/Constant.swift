@@ -13,6 +13,7 @@ enum FeedbackType: CaseIterable {
     case othersFeedback
     case feedback
     case liked
+    case disliked
     
     var height: CGFloat {
         switch self {
@@ -20,9 +21,23 @@ enum FeedbackType: CaseIterable {
         case .othersFeedback: return 630
         case .feedback: return 430
         case .liked:
-            return 120
+            return 250
+        case .disliked:
+            return 250
         }
     }
+}
+
+enum ButtonState {
+    case like
+    case dislike
+}
+
+struct ConstantImage {
+    static let likeWhite = UIImage(named: "likeWhite")
+    static let likeBlack = UIImage(named: "likeBlack")
+    static let dislikeWhite = UIImage(named: "disLikeWhite")
+    static let dislikeBlack = UIImage(named: "disLikeBlack")
 }
 
 func convertMarkdownToAttributedString(_ markdown: String) -> NSAttributedString {

@@ -10,15 +10,16 @@ import Foundation
 
 struct ChatData {
     static var chatItems: [ChatItem] = [
-        ChatItem(
-            type: .question(
-                "Why do I find that my CPAP machine causes my mouth to dry out at night?"
-            )
-        
-        ),
-        ChatItem(type: .question("What adjustments can I make to my CPAP settings to reduce nasal congestion?")),
-        ChatItem(type: .question("How can I ensure that I am using the correct CPAP mask for my needs to minimize discomfort?")),
-        
+//        ChatItem(
+//            type: .question(
+//                "How I always wake up tired. What should I do?"
+//            )
+//        
+//        ),
+//        ChatItem(type: .question("What should I do if my CPAP isn't working?")),
+//        ChatItem(type: .question("What do I do when I can’t register my device with myAir?")),
+//        ChatItem(type: .question("I’d like to submit a complaint.")),
+
 //        ChatItem(
 //            type: .question(
 //                "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn."

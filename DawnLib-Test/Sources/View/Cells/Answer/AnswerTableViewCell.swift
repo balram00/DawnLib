@@ -14,9 +14,12 @@ class AnswerTableViewCell: UITableViewCell {
     @IBOutlet weak var anwerLabel: UILabel!
     @IBOutlet weak var anwerView: UIView!
 
+    var jsonResponse: Response?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        dataSetUp()
     }
     
     override func layoutSubviews() {
@@ -34,6 +37,10 @@ class AnswerTableViewCell: UITableViewCell {
     func rotateImageView(angle: CGFloat) {
         arrowImage.transform = CGAffineTransform(rotationAngle: angle)
         
+    }
+    
+    func dataSetUp() {
+        anwerLabel.text = jsonResponse?.question
     }
 
     

@@ -4,11 +4,13 @@ class NavbarHelper {
     // Method to create the left bar button (with label and container)
     static func createLeftBarButton() -> UIView {
         let firstLabel = createLabel(text: "Dawn", font: UIFont(name: FontConstants.barlowBold, size: 20), textColor: .white)
-        let secondLabel = createLabel(text: "BETA", font: UIFont(name: FontConstants.barlowRegular, size: 11), textColor: .purple)
+        let secondLabel = createLabel(text: "BETA", font: UIFont(name: FontConstants.barlowBold, size: 11), textColor: .purple)
+        let thirdlabel = createLabel(text: "#5101", font: UIFont(name: FontConstants.barlowRegular, size: 14), textColor: .white)
 
         let secondLabelContainer = createContainer(for: secondLabel)
         
-        let stackView = UIStackView(arrangedSubviews: [firstLabel, secondLabelContainer])
+        
+        let stackView = UIStackView(arrangedSubviews: [firstLabel, secondLabelContainer,thirdlabel])
         stackView.axis = .horizontal
         stackView.spacing = 5
         stackView.alignment = .center
@@ -56,15 +58,15 @@ class NavbarHelper {
         let container = UIView()
         container.backgroundColor = .white
         container.contentMode = .center
-        container.layer.cornerRadius = 10
+        container.layer.cornerRadius = 11
         container.addSubview(label)
 
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-            container.widthAnchor.constraint(equalTo: label.widthAnchor, constant: 12),
-            container.heightAnchor.constraint(equalTo: label.heightAnchor, constant: 12)
+            container.widthAnchor.constraint(equalTo: label.widthAnchor, constant: 8),
+            container.heightAnchor.constraint(equalTo: label.heightAnchor, constant: 8)
         ])
         
         return container

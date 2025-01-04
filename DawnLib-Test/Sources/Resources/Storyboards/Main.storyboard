@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,23 +17,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="center" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="SUR-G5-c1V">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="UQS-Gh-fAh">
                                 <rect key="frame" x="0.0" y="103" width="393" height="650"/>
-                                <color key="tintColor" name="PrimaryColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Xun-8w-tX4" customClass="QuestionTableViewCell" customModule="DawnLib">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xun-8w-tX4" id="XWz-qH-ysm">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <sections/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="zNP-Hb-XgS" id="t9E-nY-L7P"/>
-                                    <outlet property="delegate" destination="zNP-Hb-XgS" id="FVP-Oj-4Bk"/>
+                                    <outlet property="dataSource" destination="zNP-Hb-XgS" id="mI1-Nl-Hpz"/>
+                                    <outlet property="delegate" destination="zNP-Hb-XgS" id="WQU-JN-qrl"/>
                                 </connections>
                             </tableView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mRU-HV-onN">
@@ -60,9 +48,12 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" image="sent"/>
+                                        <connections>
+                                            <action selector="sendButtonTapped:" destination="zNP-Hb-XgS" eventType="touchUpInside" id="JEl-Rh-hE1"/>
+                                        </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="ZaL-s9-gVJ" firstAttribute="centerY" secondItem="mRU-HV-onN" secondAttribute="centerY" id="1B6-3W-Ovd"/>
                                     <constraint firstItem="FZG-6r-e3h" firstAttribute="leading" secondItem="mRU-HV-onN" secondAttribute="leading" constant="20" id="4Kf-e7-2K6"/>
@@ -77,12 +68,12 @@
                         <viewLayoutGuide key="safeArea" id="H3F-dz-kvp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="SUR-G5-c1V" firstAttribute="top" secondItem="H3F-dz-kvp" secondAttribute="top" id="MOa-Mx-sca"/>
+                            <constraint firstItem="mRU-HV-onN" firstAttribute="top" secondItem="UQS-Gh-fAh" secondAttribute="bottom" constant="10" id="Bhk-Dk-Uj4"/>
+                            <constraint firstItem="H3F-dz-kvp" firstAttribute="trailing" secondItem="UQS-Gh-fAh" secondAttribute="trailing" id="Cvk-7L-BmO"/>
                             <constraint firstItem="H3F-dz-kvp" firstAttribute="trailing" secondItem="mRU-HV-onN" secondAttribute="trailing" constant="20" id="Nyu-WF-aSP"/>
-                            <constraint firstItem="H3F-dz-kvp" firstAttribute="trailing" secondItem="SUR-G5-c1V" secondAttribute="trailing" id="Pr2-Zi-RqT"/>
-                            <constraint firstItem="mRU-HV-onN" firstAttribute="top" secondItem="SUR-G5-c1V" secondAttribute="bottom" constant="10" id="jkH-nr-bZ5"/>
+                            <constraint firstItem="UQS-Gh-fAh" firstAttribute="leading" secondItem="H3F-dz-kvp" secondAttribute="leading" id="aaa-FK-jOA"/>
+                            <constraint firstItem="UQS-Gh-fAh" firstAttribute="top" secondItem="H3F-dz-kvp" secondAttribute="top" id="jSj-GM-DyI"/>
                             <constraint firstItem="mRU-HV-onN" firstAttribute="leading" secondItem="H3F-dz-kvp" secondAttribute="leading" constant="20" id="nAc-gv-tab"/>
-                            <constraint firstItem="SUR-G5-c1V" firstAttribute="leading" secondItem="EdC-aG-wkk" secondAttribute="leading" id="riM-e7-sqc"/>
                             <constraint firstItem="mRU-HV-onN" firstAttribute="bottom" secondItem="H3F-dz-kvp" secondAttribute="bottom" constant="-5" id="vyA-hj-u9a"/>
                         </constraints>
                     </view>
@@ -91,7 +82,7 @@
                         <outlet property="chatInputView" destination="mRU-HV-onN" id="78w-he-wPO"/>
                         <outlet property="customInputViewBottomConstraint" destination="vyA-hj-u9a" id="eHk-Ue-VYv"/>
                         <outlet property="inputTextView" destination="FZG-6r-e3h" id="WeU-ED-Ob0"/>
-                        <outlet property="questionTableView" destination="SUR-G5-c1V" id="IyS-b0-V1H"/>
+                        <outlet property="questionTableView" destination="UQS-Gh-fAh" id="65X-le-53m"/>
                         <outlet property="sendButton" destination="ZaL-s9-gVJ" id="U4f-w1-WDP"/>
                     </connections>
                 </viewController>
@@ -120,9 +111,6 @@
     </scenes>
     <resources>
         <image name="sent" width="18.666666030883789" height="15.666666984558105"/>
-        <namedColor name="PrimaryColor">
-            <color red="0.61568627450980395" green="0.15686274509803921" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
