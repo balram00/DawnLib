@@ -14,7 +14,6 @@ enum ChatItemType: String, Equatable, Codable {
     case loader
     case feedback
     case unknown
-    case empty
 
     // Custom decoding to handle unexpected values
     init(from decoder: Decoder) throws {
@@ -25,24 +24,6 @@ enum ChatItemType: String, Equatable, Codable {
         self = ChatItemType(rawValue: typeString) ?? .unknown
     }
 }
-
-
-//enum ChatItemType: String, Equatable, Codable {
-//    case question
-//    case answer
-//    case bulletPoints
-//    case loader
-//    case feedback
-//}
-
-
-//enum ChatItemType: Equatable,Codable {
-//    case question(String)
-//    case answer(String)
-//    case bulletPoints(points: [String], underlineWords: [String],boldWords: [String])
-//    case loader
-//    case feedback
-//}
 
 struct ChatItem {
     let type: ChatItemType

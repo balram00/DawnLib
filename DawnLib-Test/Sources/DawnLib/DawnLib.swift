@@ -3,20 +3,25 @@
 import Foundation
 import UIKit
 
+
 public class ChatLauncher {
     
-    @MainActor public static let shared = ChatLauncher() // Singleton instance
-
-    private init() {} // Prevent direct initialization
-
-    /// Method to push ChatViewController
-    @MainActor public func launchChat(from navigationController: UINavigationController?) {
+    @MainActor public static let shared = ChatLauncher()
+    
+    private init() {} 
+ 
+    @MainActor public func launchChat(from navigationController: UINavigationController?) -> Bool {
         guard let navigationController = navigationController else {
             print("Error: NavigationController is nil")
-            return
+            return false
         }
         
-        let chatViewController = ChatViewController.instantiate()
+        guard let chatViewController = ChatViewController.instantiate() else {
+            print("Error: ChatViewController could not be instantiated.")
+            return false
+        }
+        
         navigationController.pushViewController(chatViewController, animated: true)
+        return true
     }
 }

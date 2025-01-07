@@ -83,11 +83,7 @@ class ChatViewModel {
             jsonResponse?.append(Response(type:.feedback))
             
             if let relatedQuestion = response.response?.message?.related_questions?.first?.data {
-                jsonResponse?.append(Response(type:.empty))
                 jsonResponse?.append(Response(question:relatedQuestion, type:.question))
-                jsonResponse?.append(Response(type:.empty))
-            }else {
-                jsonResponse?.append(Response(type:.empty))
             }
 
         }

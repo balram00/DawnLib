@@ -21,9 +21,9 @@ enum FeedbackType: CaseIterable {
         case .othersFeedback: return 630
         case .feedback: return 430
         case .liked:
-            return 250
+            return 200
         case .disliked:
-            return 250
+            return 200
         }
     }
 }
@@ -63,4 +63,27 @@ func convertMarkdownToAttributedString(_ markdown: String) -> NSAttributedString
     }
     
     return attributedString
+}
+
+
+enum FooterText {
+    static let description = "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn."
+    static let underlinedText = "Things you should know about Dawn"
+}
+
+enum ButtonTitles {
+    static let doneButtonTitle = "Done"
+}
+
+enum PlaceholderText {
+    static let askAQuestionPlaceholder = "Ask a question here"
+}
+
+enum PopupMessages {
+    static let passwordCreationMessage = "Once you have created a new password, return to the myAir app and enter it on the Sign in to myAir screen. For assistance with myAir, please contact our support team."
+}
+
+enum StoryboardConstants {
+    static let mainStoryboardName = "Main"
+    static let chatViewControllerIdentifier = "ChatViewController"
 }

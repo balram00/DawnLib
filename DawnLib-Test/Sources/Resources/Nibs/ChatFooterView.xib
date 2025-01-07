@@ -28,11 +28,11 @@
                 <constraint firstAttribute="bottom" secondItem="ZH8-IH-6kU" secondAttribute="bottom" id="FFW-xK-Odz"/>
                 <constraint firstItem="ZH8-IH-6kU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="I5X-Cd-dX5"/>
                 <constraint firstItem="ZH8-IH-6kU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Jej-1Y-s5A"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ZH8-IH-6kU" secondAttribute="trailing" id="Yad-DG-Rrx"/>
+                <constraint firstAttribute="trailing" secondItem="ZH8-IH-6kU" secondAttribute="trailing" id="Yad-DG-Rrx"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="footerTextLabel" destination="ZH8-IH-6kU" id="NYF-NM-iTB"/>
+                <outlet property="footerTextLabel" destination="ZH8-IH-6kU" id="EiE-qe-Aef"/>
             </connections>
             <point key="canvasLocation" x="126.71755725190839" y="-108.45070422535211"/>
         </view>

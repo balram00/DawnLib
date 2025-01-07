@@ -1,62 +1,45 @@
-//
-//  ChatFooterView.swift
-//  DawnLib-Test
-//
-//  Created by bitcot on 30/12/24.
-//
-
 import UIKit
 
 class ChatFooterView: UIView {
     
-    static let identifier = String(describing: ChatHeaderCell.self)
+    // MARK: - Properties
     @IBOutlet weak var footerTextLabel: UILabel!
-    
-    
-    override func awakeFromNib() {
-           super.awakeFromNib()
-//        configure(with: "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.", underlinedText: "Things you should know about Dawn")
-       }
-    
+
+    // MARK: - Load Method
     class func load(frame: CGRect) -> ChatFooterView {
-        let view = Bundle.main.loadNibNamed("ChatFooterView", owner: self, options: nil)?.first as! ChatFooterView
+        let nib = UINib(nibName: "ChatFooterView", bundle: nil)
+        guard let view = nib.instantiate(withOwner: nil, options: nil).first as? ChatFooterView else {
+            fatalError("Failed to load ChatFooterView from nib")
+        }
         view.frame = frame
-        view.configure()
         return view
     }
 
-    func configure(with text: String? = "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.", underlinedText: String? = "Things you should know about Dawn") {
+    // MARK: - Configure Method
+    func configure(
+        with text: String? = "Answer may display inaccuracy, please always consult a medical professional for advice. Here are some other Things you should know about Dawn.",
+        underlinedText: String? = "Things you should know about Dawn"
+    ) {
         guard let footerTextLabel = footerTextLabel else {
             print("Error: footerTextLabel is nil")
             return
         }
         
-        // Split the text by period and add a new line after each sentence.
+        // Add new lines after periods
         let textWithNewLines = text?.split(separator: ".").map { $0 + "." }.joined(separator: "\n") ?? ""
         
-        // Create the attributed string
+        // Create attributed string
         let attributedString = NSMutableAttributedString(string: textWithNewLines)
         
-        // Find the range of the text to underline
+        // Underline the specified part of the text
         if let range = text?.range(of: underlinedText ?? "") {
             let nsRange = NSRange(range, in: text ?? "")
-            
-            // Add underline attribute to the specified range
             attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
         }
         
-        // Update the label's attributed text on the main thread
+        // Update label's attributed text
         DispatchQueue.main.async {
             footerTextLabel.attributedText = attributedString
-        
         }
     }
 }
-
-
-
- 
-
-
-
-
