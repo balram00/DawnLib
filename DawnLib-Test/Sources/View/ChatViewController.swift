@@ -17,10 +17,12 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
     
     // Properties
     var viewModel = ChatViewModel()
-    
+    var activeIndexPath: IndexPath?
+    var feedbackItems: [FeedbackItem] = []
     // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
+        inputTextView.tag = 0
         questionTableView.isUserInteractionEnabled = true
         setUpNavbar()
         setUpTableView()
@@ -332,7 +334,6 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             ) as? QuestionTableViewCell else {
                 return UITableViewCell()
             }
-            cell.delagate = self
             cell.configure(with: chatItem?.question ?? "")
             return cell
         case .answer:
@@ -349,9 +350,9 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.index = indexPath
             cell.ResponseIndexDict = viewModel.ResponseIndexDict
             cell.jsonResponse = viewModel.jsonResponse?[indexPath.row]
-            cell.configure(
-                with: chatItem?.bulletPoints ?? [String](),
-                underlineWords: chatItem?.underlineWords ?? [String]())
+            
+            cell.configure(with:"For improving your sleep and addressing your tiredness, you may consider the following:\n\n- Establish a consistent sleep schedule by going to bed and waking up at the same time each day.\n- Create a peaceful sleep environment; keep the room dark, cool, and quiet to facilitate better rest.\n- Limit screen time before bed to reduce blue light exposure and engage in calming activities like reading or meditation.\n\nFor a holistic view of your sleep health and to identify risk factors, consider taking our [sleep assessment](https://www.resmed.com.au/online-sleep-assessment). Our fun AI [SelfieScreener](https://www.resmed.com.au/selfie-screener) tool can provide insights into your sleep health in just minutes. Always consult with a licensed healthcare professional for medical advice, diagnosis and treatment options" )
+//            chatItem?.bulletPoints ?? [String]()
             
             return cell
         case .loader:
@@ -370,8 +371,12 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
                 viewModel.feedBackIndexDict[indexPath.row] = .closed
             }
             cell.feedBackIndexDict = viewModel.feedBackIndexDict
+            cell.additionalFeedbackTextView.delegate = self
             cell.screenSetup()
             cell.delegate = self
+//            let feedbackItem = feedbackItems[indexPath.row]
+
+//            cell.configure(with: feedbackItem)
             
             return cell
         case .none:
@@ -442,7 +447,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
                 forText: bulletPoints.joined(separator: "\n"),
                 width: width
             )
-            return height
+            return 800
             
         case .loader:
             return 50.0
@@ -497,34 +502,70 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
 extension ChatViewController: UITextViewDelegate {
     
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        scrollToBottom()
-        DispatchQueue.main
-            .async {
+        if textView.tag == 0 {
+            scrollToBottom()
+            DispatchQueue.main.async {
                 self.chatInputView.layer.borderWidth = 1
                 self.chatInputView.layer.borderColor = UIColor.palette.primaryColor.cgColor
                 self.sendButton.layer.backgroundColor = UIColor.palette.primaryColor.cgColor
             }
-        
-        if textView.text == PlaceholderText.askAQuestionPlaceholder {
-            textView.text = ""
-            textView.textColor = .black
+            
+            if textView.text == PlaceholderText.askAQuestionPlaceholder {
+                textView.text = ""
+                textView.textColor = .black
+            }
+            return true
+        } else if textView.tag == 1 {
+            guard let cellPosition = textView.superview?.convert(CGPoint.zero, to: questionTableView),
+                    let indexPath = questionTableView.indexPathForRow(at: cellPosition) else {
+                  return true
+              }
+
+              // Store the currently active index path (optional)
+              activeIndexPath = indexPath
+
+              // Focus on the text view
+              return true
         }
-        return true
+        
+        return false
     }
+
     
     public func textViewDidEndEditing(_ textView: UITextView) {
-        chatInputView.layer.borderColor = UIColor.clear.cgColor
-        sendButton.layer.backgroundColor = UIColor.systemGray4.cgColor
-        
-        if textView.text.isEmpty {
-            textView.text = PlaceholderText.askAQuestionPlaceholder
-            textView.textColor = .darkGray
+        if textView.tag == 0 {
+            chatInputView.layer.borderColor = UIColor.clear.cgColor
+            sendButton.layer.backgroundColor = UIColor.systemGray4.cgColor
+            
+            if textView.text.isEmpty {
+                textView.text = PlaceholderText.askAQuestionPlaceholder
+                textView.textColor = .darkGray
+            }
+        } else if textView.tag == 1 {
+            guard let cellPosition = textView.superview?.convert(CGPoint.zero, to: questionTableView),
+                  let indexPath = questionTableView.indexPathForRow(at: cellPosition) else {
+                  return
+              }
+        }
+    }
+
+    
+    public func textViewShouldReturn(_ textView: UITextView) -> Bool {
+        if textView.tag == 0 {
+            textView.resignFirstResponder()
+            return true
+        }else {
+            textView.resignFirstResponder()
+            return true
         }
     }
     
-    public func textViewShouldReturn(_ textView: UITextView) -> Bool {
-        textView.resignFirstResponder()
-        return true
+    public func textViewDidChange(_ textView: UITextView) {
+        if let cell = textView.superview?.superview as? FeedbackTableViewCell,
+           let indexPath = cell.index {
+            // Update the feedback item with the text
+            print("sv")
+        }
     }
     
     public func textView(_ textView: UITextView,shouldChangeTextIn range: NSRange,replacementText text: String) ->Bool {
@@ -539,23 +580,19 @@ extension ChatViewController: UITextViewDelegate {
     }
 }
 
-extension ChatViewController: FeedbackTableViewCellDelegate,ResponseTableViewDelegate,QuestionTableViewCellDelegate {
-    func didSelectQuestion(_ cell: QuestionTableViewCell) {
+extension ChatViewController: FeedbackTableViewCellDelegate,ResponseTableViewDelegate {
+    func didUpdateAdditionalFeedback(in cell: FeedbackTableViewCell, newFeedback: String) {
+        // Handle the updated additional feedback text
+        guard let indexPath = questionTableView.indexPath(for: cell) else { return }
         
-//        viewModel.addingLoader()
-//        DispatchQueue.main.async {
-//            self.questionTableView.reloadData()
-//        }
-//        self.scrollToBottom()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-//            self.viewModel.fetchDataAndDisplay(question: cell.questionLabel.text ?? "")
-//            if let index = self.viewModel.jsonResponse?.firstIndex(where: { $0.type == .loader }) {
-//                self.viewModel.jsonResponse?.remove(at: index)
-//                self.questionTableView.reloadData()
-//            }
-//        }
+        // Update the specific feedbackItem at the given indexPath
+        feedbackItems[indexPath.row].data?[0].additionalFeedback = newFeedback
+        
+        // Optionally reload the cell to reflect changes
+        questionTableView.reloadRows(at: [indexPath], with: .none)
     }
     
+
     func labelTapped(in cell: ResponseTableViewCell, tappedWord: String,at location: CGPoint) {
         print(tappedWord)
         //        showPopup(at: location)
@@ -570,14 +607,23 @@ extension ChatViewController: FeedbackTableViewCellDelegate,ResponseTableViewDel
     }
     
     func didTapFeedbackButton(in cell: FeedbackTableViewCell, newStatus: FeedbackType) {
-        if let index = cell.index?.row {
-            viewModel.feedBackIndexDict[index] = newStatus
-        }
+        guard let indexPath = cell.index else { return }
         
-        if let indexPath = cell.index {
-            questionTableView.reloadRows(at: [indexPath], with: .automatic)
+        if cell.isTextViewOpen == false {
+            // Update the status in the data model
+            viewModel.feedBackIndexDict[indexPath.row] = newStatus
+            
+            // Only reload if the text view is not open
+            questionTableView.reloadRows(at: [indexPath], with: .none)
+        } else {
+            // Text view is open, so directly update the status in the data model
+            viewModel.feedBackIndexDict[indexPath.row] = newStatus
+
+            // Do not reload the cell; allow the user to continue typing
+            print("TextView is open, status updated in the model only.")
         }
     }
+
     
     func showPopup(at location: CGPoint) {
         // Remove any existing popup

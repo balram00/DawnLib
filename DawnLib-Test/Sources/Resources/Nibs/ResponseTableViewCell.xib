@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,33 +19,39 @@
                 <rect key="frame" x="0.0" y="0.0" width="444" height="240"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="fregthryrtgerfwed" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Flj-JB-Wkj">
-                        <rect key="frame" x="15" y="0.0" width="414" height="20.666666666666668"/>
-                        <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="18"/>
-                        <color key="textColor" name="TextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9pI-dI-fdw">
+                        <rect key="frame" x="0.0" y="0.0" width="444" height="240"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                        <color key="textColor" systemColor="labelColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                 </subviews>
                 <color key="tintColor" name="PrimaryColor"/>
                 <constraints>
-                    <constraint firstItem="Flj-JB-Wkj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="CeB-wS-hrY"/>
-                    <constraint firstAttribute="trailing" secondItem="Flj-JB-Wkj" secondAttribute="trailing" constant="15" id="Ug3-MW-VJ0"/>
-                    <constraint firstItem="Flj-JB-Wkj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="nMv-bi-7Zq"/>
+                    <constraint firstAttribute="trailing" secondItem="9pI-dI-fdw" secondAttribute="trailing" id="LXD-bB-5hn"/>
+                    <constraint firstItem="9pI-dI-fdw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="lii-SI-M70"/>
+                    <constraint firstItem="9pI-dI-fdw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="noa-Oo-025"/>
+                    <constraint firstAttribute="bottom" secondItem="9pI-dI-fdw" secondAttribute="bottom" id="uZf-3R-z8e"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="responseTextLabel" destination="Flj-JB-Wkj" id="BDs-Av-2eK"/>
+                <outlet property="responseTextView" destination="9pI-dI-fdw" id="gga-vZ-d4h"/>
             </connections>
-            <point key="canvasLocation" x="27" y="73"/>
+            <point key="canvasLocation" x="25.954198473282442" y="71.83098591549296"/>
         </tableViewCell>
     </objects>
     <resources>
         <namedColor name="PrimaryColor">
             <color red="0.61568627450980395" green="0.15686274509803921" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="TextColor">
-            <color red="0.25882352941176473" green="0.25882352941176473" blue="0.2627450980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

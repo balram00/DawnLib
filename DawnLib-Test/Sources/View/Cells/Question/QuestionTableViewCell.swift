@@ -7,9 +7,6 @@
 
 import UIKit
 
-protocol QuestionTableViewCellDelegate: AnyObject {
-    func didSelectQuestion(_ cell: QuestionTableViewCell)
-}
 
 class QuestionTableViewCell: UITableViewCell {
     
@@ -19,7 +16,6 @@ class QuestionTableViewCell: UITableViewCell {
     @IBOutlet weak var questionView: UIView!
     @IBOutlet weak var messageImage: UIImageView!
 
-    var delagate: QuestionTableViewCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -46,9 +42,7 @@ class QuestionTableViewCell: UITableViewCell {
 
     
     @objc func labelTapped(_ sender: UITapGestureRecognizer) {
-        if let delagate {
-            delagate.didSelectQuestion(self)
-        }
+      
     }
 
     func configure(with questionText: String) {

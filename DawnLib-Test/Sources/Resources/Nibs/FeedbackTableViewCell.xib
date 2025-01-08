@@ -190,7 +190,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="(optional) Feel free to add specific detail" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="24W-lx-rut">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" text="(optional) Feel free to add specific detail" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="24W-lx-rut">
                                                 <rect key="frame" x="5" y="65" width="955" height="115"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -309,7 +309,6 @@
                 <outletCollection property="feedbackButtons" destination="pW5-SB-dyb" collectionClass="NSMutableArray" id="Y3C-1E-v8L"/>
                 <outletCollection property="feedbackButtons" destination="QnX-hm-kF3" collectionClass="NSMutableArray" id="53g-5x-RmB"/>
                 <outletCollection property="feedbackButtons" destination="oaH-TC-dPr" collectionClass="NSMutableArray" id="P9B-2X-tq1"/>
-                <outletCollection property="feedbackButtons" destination="qoC-Rt-lhX" collectionClass="NSMutableArray" id="2XB-nP-bjF"/>
                 <outletCollection property="feedbackButtons" destination="qoC-Rt-lhX" collectionClass="NSMutableArray" id="HH5-e5-R2i"/>
             </connections>
             <point key="canvasLocation" x="535.1145038167939" y="229.22535211267606"/>
