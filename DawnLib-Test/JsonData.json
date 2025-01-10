@@ -5,7 +5,7 @@
                 "response": {
                     "message": {
                         "text": [
-                            "For improving your sleep and addressing your tiredness, you may consider the following:\n Establish a consistent sleep schedule by going to bed and waking up at the same time each day.\n- Create a peaceful sleep environment; keep the room dark, cool, and quiet to facilitate better rest.\n Limit screen time before bed to reduce blue light exposure and engage in calming activities like reading or meditation.\nFor a holistic view of your sleep health and to identify risk factors, consider taking our [sleep assessment](https://www.resmed.com.au/online-sleep-assessment)"
+                            "For improving your sleep and addressing your tiredness, you may consider the following:\n\n- Establish a consistent sleep schedule by going to bed and waking up at the same time each day.\n- Create a peaceful sleep environment; keep the room dark, cool, and quiet to facilitate better rest.\n- Limit screen time before bed to reduce blue light exposure and engage in calming activities like reading or meditation.\n\nFor a holistic view of your sleep health and to identify risk factors, consider taking our [sleep assessment](https://www.resmed.com.au/online-sleep-assessment). Our fun AI [SelfieScreener](https://www.resmed.com.au/selfie-screener) tool can provide insights into your sleep health in just minutes. Always consult with a licensed healthcare professional for medical advice, diagnosis and treatment options"
                         ],
                         "underLineText": [
                             "holistic view",
@@ -27,7 +27,7 @@
             "question": "What should I do if my CPAP isn't working?",
             "response": {
                 "message": {
-                    "text": [" Dryness may arise from various factors such as air leaks, humidity levels, or other health conditions; it may be helpful to consult your healthcare provider for recommendations.\n Consider adjusting the humidity levels on your CPAP device or ensuring that your mask and tubing are secure and free of any leaks.\n If issues persist, reaching out to your healthcare provider or equipment provider may provide further insights into managing your CPAP therapy effectively."],
+                    "text": ["Dryness may arise from various factors such as air leaks, humidity levels, or other health conditions; it may be helpful to consult your healthcare provider for recommendations.\n- Consider adjusting the humidity levels on your CPAP device or ensuring that your mask and tubing are secure and free of any leaks.\n- If issues persist, reaching out to your healthcare provider or equipment provider may provide further insights into managing your CPAP therapy effectively."],
                     "expandable_cards": null,
                     "underLineText": ["Limit"],
                     "related_questions": [{"type": "related-question-text", "data": "How that my CPAP machine causes dry out at night?", "text": "Why do I find that my CPAP machine causes my mouth to dry out at night? "}, {"type": "related-question-text", "data": "What adjustments can I make to my CPAP settings to reduce nasal congestion? ", "text": "What adjustments can I make to my CPAP settings to reduce nasal congestion? "}]
@@ -48,7 +48,7 @@
             "question": "What do I do when I can’t register my device with myAir?",
             "response": {
                 "message": {
-                    "text": ["You might encounter issues registering if myAir services are temporarily unavailable. \n It may be helpful to wait a few hours and then attempt to log in again.\n For further assistance with myAir, please contact our [support team](mailto:myairsupportanz@resmed.com.au)."],
+                    "text": ["You might encounter issues registering if myAir services are temporarily unavailable. \n- It may be helpful to wait a few hours and then attempt to log in again.\n\n For further assistance with myAir, please contact our [support team](mailto:myairsupportanz@resmed.com.au)."],
                     "expandable_cards": null,
                     "underLineText": ["(mailto:myairsupportanz@resmed.com.au)"],
                     "related_questions":null
@@ -84,7 +84,7 @@
             "question": "How that my CPAP machine causes dry out at night?",
             "response": {
                 "message": {
-                    "text": ["You might encounter issues registering if myAir services are temporarily unavailable. \n It may be helpful to wait a few hours and then attempt to log in again.\n For further assistance with myAir, please contact our [support team](mailto:myairsupportanz@resmed.com.au)."],
+                    "text": ["You might encounter issues registering if myAir services are temporarily unavailable. \n- It may be helpful to wait a few hours and then attempt to log in again.\n- For further assistance with myAir, please contact our [support team](mailto:myairsupportanz@resmed.com.au)."],
                     "expandable_cards": null,
                     "underLineText": ["temporarily unavailable"],
                     "related_questions":null
@@ -103,13 +103,35 @@
                 "response": {
                     "message": {
                         "text": [
-                            "For improving your sleep and addressing your tiredness, you may consider the following:\n- Establish a consistent sleep schedule by going to bed and waking up at the same time each day.\n- Create a peaceful sleep environment; keep the room dark, cool, and quiet to facilitate better rest.\n- Limit screen time before bed to reduce blue light exposure and engage in calming activities like reading or meditation.\nFor a holistic view of your sleep health and to identify risk factors, consider taking our [sleep assessment](https://www.resmed.com.au/online-sleep-assessment)."
+                            "For improving your sleep and addressing your tiredness, you may consider the following:\n\n- Establish a consistent sleep schedule by going to bed and waking up at the same time each day.\n\n- Create a peaceful sleep environment; keep the room dark, cool, and quiet to facilitate better rest.\n\n- Limit screen time before bed to reduce blue light exposure and engage in calming activities like reading or meditation.\n\nFor a holistic view of your sleep health and to identify risk factors, consider taking our [sleep assessment](https://www.resmed.com.au/online-sleep-assessment)."
                         ],
                         "underLineText": [
                             "holistic",
                             "tiredness"
                         ],
                         "related_questions":null
+                    },
+                    "conversation_id": "b73dd90e-2d90-442c-8104-c4c1d52e25b9",
+                    "message_id": "cc0de32d-e70f-4f29-98c4-ee37e861bf83",
+                    "conversation_display_id": 3881,
+                    "in_chat_answer_keyword_definition_pair": {},
+                    "e2e_links_keyword_definition_pair": {},
+                    "exclusion_probing_questions": {}
+                }
+            },
+        {
+                "type": "wrapup",
+                "question": "unrelated question",
+                "response": {
+                    "message": {
+                        "text": [
+                            " **My virtual hands** are tied on this one, I'm afraid. For a more human touch, our [Contact Us form](https://www.resmed.com.au/support-service?utm_source=VA&utm_medium=referral) will connect you with the assistance you require."
+                        ],
+                        "underLineText": [
+                            "holistic",
+                            "tiredness"
+                        ],
+                        "related_questions":[{"type": "related-question-text", "data": "What can I ask you", "text": "Why do I find that my CPAP machine causes my mouth to dry out at night? "}, {"type": "related-question-text", "data": "Tell me about ResMed's products", "text": "What adjustments can I make to my CPAP settings to reduce nasal congestion? "}, {"type": "related-question-text", "data": "Tell me about ResMed's products", "text": "How can you help me? "}]
                     },
                     "conversation_id": "b73dd90e-2d90-442c-8104-c4c1d52e25b9",
                     "message_id": "cc0de32d-e70f-4f29-98c4-ee37e861bf83",

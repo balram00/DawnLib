@@ -23,6 +23,14 @@ class ChatHeaderView: UIView {
             lineHeight: 41.6,
             alignment: .center
         )
+        headingLabel.textColor =  UIColor { tc in
+            switch tc.userInterfaceStyle {
+            case .dark:
+                return UIColor.white
+            default:
+                return UIColor.palette.textColor
+            }
+        }
      }
     
     class func load(frame: CGRect) -> ChatHeaderView {

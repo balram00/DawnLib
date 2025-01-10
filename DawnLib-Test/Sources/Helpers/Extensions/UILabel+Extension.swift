@@ -300,15 +300,37 @@ extension UITextView {
     // Function to animate typing with markdown text and apply styling
     func animateTypewriterEffectWithMarkdownAndBullets(
         markdownText: String,
-        fontFamily: String = "Roboto-Regular",  // Default font
-        fontSize: CGFloat = 16,                // Font size
-        fontWeight: UIFont.Weight = .regular,  // Font weight
-        textColor: UIColor = .black,           // Text color
-        bulletColor: UIColor = .black,         // Bullet color
-        primaryColor: UIColor = .primary,         // Primary color for links
-        lineHeight: CGFloat = 1.5,             // Line height
+        fontFamily: String = FontConstants.robotoRegular,
+        fontSize: CGFloat = FontSize.regular.rawValue,
+        fontWeight: UIFont.Weight = .regular,
+        textColor: UIColor = UIColor { tc in
+               switch tc.userInterfaceStyle {
+               case .dark:
+                   return .white
+               default:
+                   return UIColor.palette.textColor
+               }
+           },
+        bulletColor: UIColor = UIColor { tc in
+            switch tc.userInterfaceStyle {
+            case .dark:
+                return .white
+            default:
+                return .black
+            }
+        },
+        primaryColor: UIColor = UIColor { tc in
+              switch tc.userInterfaceStyle {
+              case .dark:
+                  return .cyan
+              default:
+                  return .primary
+              }
+          },
+        lineHeight: CGFloat = 1.5,
         alignment: NSTextAlignment = .left,    // Text alignment
-        typingSpeed: TimeInterval = 0.0001,      // Typing speed
+        typingSpeed: TimeInterval = 0.0001,   // Typing speed
+        animate: Bool = true,                 // New parameter to toggle animation
         completion: @escaping (() -> Void) = {} // Completion closure
     ) {
         self.attributedText = NSAttributedString(string: "")
@@ -325,6 +347,13 @@ extension UITextView {
             lineHeight: lineHeight,
             alignment: alignment
         )
+        
+        // If animation is disabled, set the text immediately and call the completion closure
+        guard animate else {
+            self.attributedText = attributedText
+            completion()
+            return
+        }
         
         var currentIndex = 0
         let characters = Array(attributedText.string)
@@ -344,6 +373,7 @@ extension UITextView {
         }
         typewriterTimer.fire()
     }
+
     
     // Helper method to parse markdown text with bullets and links
     private func parseMarkdownToAttributedStringWithBulletsAndLinks(
@@ -384,7 +414,7 @@ extension UITextView {
         
         markdownText.enumerateLines { line, _ in
             if line.starts(with: "- ") {
-                let bulletPoint = "● "
+                let bulletPoint = "●  "
                 let bulletAttributedString = NSAttributedString(string: bulletPoint, attributes: bulletAttributes)
                 attributedString.append(bulletAttributedString)
                 

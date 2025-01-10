@@ -209,139 +209,114 @@ class ResponseTableViewCell: UITableViewCell, UITextViewDelegate {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-//        responseTextLabel.isUserInteractionEnabled = true
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(bulletPointTapped(_:)))
-//        responseTextLabel.addGestureRecognizer(tapGesture)
         setupTextView()
+        addTapGestureRecognizerToTextView()
+      
     }
+
     
     func setupTextView() {
         responseTextView.isEditable = false
         responseTextView.isSelectable = true
+        responseTextView.isUserInteractionEnabled = true
         responseTextView.isScrollEnabled = false
         responseTextView.dataDetectorTypes = [.link]
         responseTextView.delegate = self
-        }
-
-    
-    func configure(with markdownText: String) {
-        // Convert markdown text to attributed text
-//        let attributedText = responseTextView.animateTypewriterEffectWithMarkdownAndBullets(markdownText: markdownText)
-        
-        // Set the resulting attributed text to the textView
-        responseTextView.animateTypewriterEffectWithMarkdownAndBullets(markdownText: markdownText)
-
     }
 
+    func addTapGestureRecognizerToTextView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTextViewTap(_:)))
+        tapGesture.cancelsTouchesInView = false
+        responseTextView.addGestureRecognizer(tapGesture)
+    }
 
+    @objc func handleTextViewTap(_ sender: UITapGestureRecognizer) {
+        guard let textView = sender.view as? UITextView else { return }
+        let location = sender.location(in: textView)
+        
+        if let tappedWord = findWord(at: location, in: textView) {
+            // Notify the delegate about the tap
+            delegate?.labelTapped(in: self, tappedWord: tappedWord, at: location)
+        }
+    }
 
+    func findWord(at location: CGPoint, in textView: UITextView) -> String? {
+        guard let attributedText = textView.attributedText else { return nil }
+
+        let layoutManager = textView.layoutManager
+        let textContainer = textView.textContainer
+        let textStorage = NSTextStorage(attributedString: attributedText)
+        
+        // Convert the tap location to the text container coordinates
+        let locationInTextContainer = CGPoint(x: location.x - textView.textContainerInset.left,
+                                              y: location.y - textView.textContainerInset.top)
+        let characterIndex = layoutManager.characterIndex(for: locationInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+
+        if characterIndex < attributedText.length {
+            let text = attributedText.string as NSString
+            let wordRange = text.rangeOfComposedCharacterSequence(at: characterIndex)
+            return text.substring(with: wordRange)
+        }
+        return nil
+    }
     
+    func configure(with markdownText: [String]) {
+        guard let row = index?.row else { return }
+        let text = markdownText.joined(separator: "\n")
+
+        if !ResponseIndexDict.keys.contains(row) {
+               ResponseIndexDict[row] = false
+           }
+        
+        if  ResponseIndexDict[row] == false {
+            self.delegate?.animationCompleted(in: self)
+          responseTextView.animateTypewriterEffectWithMarkdownAndBullets(markdownText: text,animate: true){
+                self.ResponseIndexDict[row] = true
+            }
+          } else {
+              responseTextView.animateTypewriterEffectWithMarkdownAndBullets(markdownText: text,animate: false)
+          }
+    }
+
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         UIApplication.shared.open(URL)
         return false
     }
 
-
-//    func configure(with textArray: [String], underlineWords: [String]) {
-//        guard let row = index?.row else { return }
-//
-//        if !ResponseIndexDict.keys.contains(row) {
-//            ResponseIndexDict[row] = false
-//        }
-//
-//        let formattedText = textArray
-//            .flatMap { $0.components(separatedBy: "\n") }
-//            .map { "● \($0.trimmingCharacters(in: .whitespaces))" }
-//            .joined(separator: "\n\n")
-//
-////        responseTextLabel.applyCustomStyle(
-////            fontFamily: FontConstants.robotoRegular,
-////            fontSize: FontSize.regular.rawValue,
-////            lineHeight: 23,
-////            alignment: .left,
-////            underlineText: underlineWords
-////        )
-//
-//        if ResponseIndexDict[row] == false {
-////            self.ResponseIndexDict[row] = true
-//
-//            responseTextLabel.animateTypewriterEffectWithMarkdownAndBullets(for: "For improving your sleep and addressing your tiredness, you may consider the following:\n\n- Establish a consistent sleep schedule by going to bed and waking up at the same time each day.\n- Create a peaceful sleep environment; keep the room dark, cool, and quiet to facilitate better rest.\n- Limit screen time before bed to reduce blue light exposure and engage in calming activities like reading or meditation.\n\nFor a holistic view of your sleep health and to identify risk factors, consider taking our [sleep assessment](https://www.resmed.com.au/online-sleep-assessment). Our fun AI [SelfieScreener](https://www.resmed.com.au/selfie-screener) tool can provide insights into your sleep health in just minutes. Always consult with a licensed healthcare professional for medical advice, diagnosis and treatment options.") {
-//                self.delegate?.animationCompleted(in: self)
-////              self.displayMarkdownText() // Display markdown text after animation
-//            }
-//        } else {
-//            responseTextLabel.text = formattedText
-//        }
-//    }
+}
 
 
-
-//    func displayMarkdownText() {
-//        let markdownText = """
-//        For improving your sleep and addressing your tiredness, you may consider the following:
-//        
-//        - Establish a consistent sleep schedule by going to bed and waking up at the same time each day.
-//        - Create a peaceful sleep environment; keep the room dark, cool, and quiet to facilitate better rest.
-//        - Limit screen time before bed to reduce blue light exposure and engage in calming activities like reading or meditation.
-//        
-//        For a holistic view of your sleep health and to identify risk factors, consider taking our [sleep assessment](https://www.resmed.com.au/online-sleep-assessment). Our fun AI [SelfieScreener](https://www.resmed.com.au/selfie-screener) tool can provide insights into your sleep health in just minutes. Always consult with a licensed healthcare professional for medical advice, diagnosis, and treatment options.
-//        """
-//
-//        let attributedMarkdown = convertMarkdownToAttributedText(markdownText)
-//        responseTextLabel.attributedText = attributedMarkdown
-//    }
-
-//    func convertMarkdownToAttributedText(_ markdown: String) -> NSAttributedString {
-//        let markdownToHtml = markdown
-//            .replacingOccurrences(of: "\\n", with: "<br>")
-//            .replacingOccurrences(of: "- ", with: "• ")
-//            .replacingOccurrences(of: "[", with: "<a href='")
-//            .replacingOccurrences(of: "](https", with: "'>link</a>(https")
-//            .replacingOccurrences(of: ")", with: "")
-//
-//        let htmlTemplate = """
-//        <style>
-//        body { font-family: -apple-system, Helvetica, Arial, sans-serif; font-size: 16px; }
-//        </style>
-//        <body>\(markdownToHtml)</body>
-//        """
-//
-//        guard let data = htmlTemplate.data(using: .utf8) else { return NSAttributedString(string: markdown) }
-//
-//        do {
-//            let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
-//                .documentType: NSAttributedString.DocumentType.html,
-//                .characterEncoding: String.Encoding.utf8.rawValue
-//            ]
-//            return try NSAttributedString(data: data, options: options, documentAttributes: nil)
-//        } catch {
-//            print("Error converting markdown to attributed string: \(error)")
-//            return NSAttributedString(string: markdown)
-//        }
-//    }
-
-//    func getTappedWord(at point: CGPoint) -> String? {
-//        guard let attributedText = responseTextLabel.attributedText else { return nil }
-//
-//        let textStorage = NSTextStorage(attributedString: attributedText)
-//        let layoutManager = NSLayoutManager()
-//        let textContainer = NSTextContainer(size: responseTextLabel.bounds.size)
-//        
-//        textStorage.addLayoutManager(layoutManager)
-//        layoutManager.addTextContainer(textContainer)
-//
-//        let locationOfTouchInLabel = responseTextLabel.convert(point, from: responseTextLabel.superview)
-//        let characterIndex = layoutManager.characterIndex(for: locationOfTouchInLabel, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-//
-//        if characterIndex < attributedText.length {
-//            let text = attributedText.string as NSString
-//            let wordRange = text.rangeOfCharacter(from: .whitespacesAndNewlines, options: .backwards, range: NSRange(location: 0, length: characterIndex))
-//            let startIndex = wordRange.location == NSNotFound ? 0 : wordRange.location + 1
-//            let endRange = text.rangeOfCharacter(from: .whitespacesAndNewlines, options: .literal, range: NSRange(location: characterIndex, length: text.length - characterIndex))
-//            let endIndex = endRange.location == NSNotFound ? text.length : endRange.location
-//            let word = text.substring(with: NSRange(location: startIndex, length: endIndex - startIndex))
-//            return word
-//        }
-//        return nil
-//    }
+extension UITextView {
+    /// Highlights specific words with a background color and adds a bottom border.
+    func highlightWords(_ words: [String], withBackgroundColor color: UIColor = .systemGray, andBottomLineWithColor lineColor: UIColor = .lightGray) {
+        guard let text = self.text else { return }
+        
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        // Highlight specific words
+        for word in words {
+            let range = (text as NSString).range(of: word)
+            if range.location != NSNotFound {
+                attributedString.addAttribute(.backgroundColor, value: color, range: range)
+            }
+        }
+        
+        self.attributedText = attributedString
+        
+        // Add bottom border
+        addBottomBorder(color: lineColor, height: 1.0)
+    }
+    
+    /// Adds a bottom border to the UITextView
+    private func addBottomBorder(color: UIColor, height: CGFloat) {
+        let borderLayer = CALayer()
+        borderLayer.backgroundColor = UIColor.palette.primaryColor.cgColor
+        borderLayer.frame = CGRect(x: 0, y: self.frame.height - height, width: self.frame.width, height: height)
+        
+        // Remove existing borders to avoid duplicates
+        self.layer.sublayers?.filter { $0.name == "BottomBorderLayer" }.forEach { $0.removeFromSuperlayer() }
+        
+        borderLayer.name = "BottomBorderLayer"
+        self.layer.addSublayer(borderLayer)
+    }
 }

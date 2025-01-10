@@ -15,13 +15,21 @@ class PopupView: UIView {
     }
     
     override func awakeFromNib() {
-           super.awakeFromNib()
-           // Configure the label to handle multiline text
-           contentLabel.numberOfLines = 0
-           contentLabel.lineBreakMode = .byWordWrapping
-           contentLabel.textAlignment = .left
-       }
-
+        super.awakeFromNib()
+        // Configure the label to handle multiline text
+        contentLabel.numberOfLines = 0
+        contentLabel.lineBreakMode = .byWordWrapping
+        contentLabel.textAlignment = .left
+        contentLabel.textColor =  UIColor { tc in
+            switch tc.userInterfaceStyle {
+            case .dark:
+                return UIColor.palette.textColor
+            default:
+                return UIColor.palette.textColor
+            }
+        }
+    }
+    
     func addTapGestureToRemove() {
         // Apply gradient border to the contentView
         let gradientBorderView = GradientBorderView(frame: contentView.bounds)

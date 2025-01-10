@@ -1,8 +1,7 @@
 import UIKit
 protocol FeedbackTableViewCellDelegate: AnyObject {
-    func didTapFeedbackButton(in cell: FeedbackTableViewCell, newStatus: FeedbackType)
+    func didTapFeedbackButton(in cell: FeedbackTableViewCell, newStatus: FeedbackType,selectButtonIndex: Int)
     func didUpdateAdditionalFeedback(in cell: FeedbackTableViewCell, newFeedback: String)
-
 }
 
 struct FeedbackItem {
@@ -50,7 +49,9 @@ class FeedbackTableViewCell: UITableViewCell {
     var isTextViewOpen:Bool? = false
     var feedbackItem: FeedbackItem? // Data model for this cell
     var feedbackIndex: Int?
-
+    var addFeedBackIndexDict: [Int: String] = [:]
+    var feedbackselectedButton: Int? = 0
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         startingSetUp()
@@ -58,7 +59,8 @@ class FeedbackTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        screenSetup()
+        additionalFeedbackTextView.translatesAutoresizingMaskIntoConstraints = false
         submitButton.layer.cornerRadius = submitButton.frame.height / 2
         disLikeButton.layer.cornerRadius = disLikeButton.frame.height / 2
         likeButton.layer.cornerRadius = likeButton.frame.height / 2
@@ -81,30 +83,37 @@ class FeedbackTableViewCell: UITableViewCell {
     }
     
     func configure(with feedbackItem: FeedbackItem) {
-         self.feedbackItem = feedbackItem
-         
-         // Assuming we have a single `feedbackData` in `data`
-         if let feedbackData = feedbackItem.data?.first {
-             additionalFeedbackTextView.text = feedbackData.additionalFeedback ?? "Provide additional feedback..."
-             additionalFeedbackTextView.textColor = feedbackData.additionalFeedback?.isEmpty == true ? .lightGray : .black
-         }
-     }
-
+        self.feedbackItem = feedbackItem
+        
+        // Set additional feedback from the dictionary if available
+        if let index = index?.row, let feedbackText = addFeedBackIndexDict[index] {
+            additionalFeedbackTextView.text = feedbackText
+            additionalFeedbackTextView.textColor = feedbackText.isEmpty ? .lightGray : .black
+        } else {
+            // Default text when there is no saved feedback
+            additionalFeedbackTextView.text = "Provide additional feedback..."
+            additionalFeedbackTextView.textColor = .lightGray
+        }
+        
+        // Call screenSetup to restore the UI state based on the feedback
+        screenSetup()
+    }
+    
     //MARK: - Actions
     
     @IBAction func likeTapped(_ sender: UIButton) {
         updatingLikeDislikeButtonBGColor(state: .like)
-        delegate?.didTapFeedbackButton(in: self, newStatus: .liked)
+        delegate?.didTapFeedbackButton(in: self, newStatus: .liked, selectButtonIndex: 0)
     }
     
     @IBAction func disLikeTapped(_ sender: UIButton) {
         updatingLikeDislikeButtonBGColor(state: .dislike)
-        delegate?.didTapFeedbackButton(in: self, newStatus: .feedback)
+        delegate?.didTapFeedbackButton(in: self, newStatus: .feedback, selectButtonIndex: 0)
     }
     
     @IBAction func closeTapped(_ sender: UIButton) {
         closedFeedback()
-        delegate?.didTapFeedbackButton(in: self, newStatus: .closed)
+        delegate?.didTapFeedbackButton(in: self, newStatus: .closed, selectButtonIndex: 0)
     }
     
     @IBAction func didNotProvideAnswerTapped(_ sender: UIButton) {
@@ -126,7 +135,7 @@ class FeedbackTableViewCell: UITableViewCell {
     @IBAction func didNotLikeTheStyleTapped(_ sender: UIButton) {
         updateButtonBackgroundColor(sender)
     }
-
+    
     @IBAction func othersTapped(_ sender: UIButton) {
         selectedOtherFeedback()
     }
@@ -135,15 +144,15 @@ class FeedbackTableViewCell: UITableViewCell {
         submitButton.setTitle("Please wait ..", for: .normal)
         self.isUserInteractionEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            self.delegate?.didTapFeedbackButton(in: self, newStatus: .disliked)
+            self.delegate?.didTapFeedbackButton(in: self, newStatus: .disliked, selectButtonIndex: 0)
         }
     }
-        
+    
     //MARK: - Functions
     func startingSetUp() {
-//        additionalFeedbackTextView.delegate = self
-        additionalFeedbackTextView.isUserInteractionEnabled = true
-        additionalFeedbackTextView.isEditable = true
+        feedbackselectedButton = 0
+        additionalFeedbackTextView.delegate = self
+        additionalFeedbackTextView.returnKeyType = .done
         thankYouView.layer.cornerRadius = 10
         feedbackView.isHidden = true
         additionalFeedbackView.isHidden = true
@@ -153,9 +162,9 @@ class FeedbackTableViewCell: UITableViewCell {
         likeButton.setImage(ConstantImage.likeBlack, for: .normal)
         disLikeButton.setImage(ConstantImage.dislikeBlack, for: .normal)
         feedbackButtons.forEach { button in
-               button.backgroundColor = UIColor.palette.feedBackButtonColor
-               button.tintColor = .black
-           }
+            button.backgroundColor = UIColor.palette.feedBackButtonColor
+            button.tintColor = .black
+        }
         submitButton.setTitle("Submit", for: .normal)
         othersFeedbackButton.tintColor = .black
         submitButton.layer.backgroundColor = UIColor.palette.primaryColor.cgColor
@@ -184,7 +193,7 @@ class FeedbackTableViewCell: UITableViewCell {
     func configure(with text: String, delegate: UITextViewDelegate) {
         additionalFeedbackTextView.text = text
         additionalFeedbackTextView.delegate = delegate
-      }
+    }
     
     func screenSetup() {
         self.isUserInteractionEnabled = true
@@ -201,16 +210,20 @@ class FeedbackTableViewCell: UITableViewCell {
                     feedbackView.isHidden = false
                     thankYouView.isHidden = true
                     additionalFeedbackView.isHidden = true
-//                    feedbackButtons.forEach { button in
-//                        button.layer.backgroundColor = UIColor.palette.feedBackButtonColor.cgColor
-//                        button.tintColor = .black
-//                    }
-                    updatingLikeDislikeButtonBGColor(state: .dislike)
-                    
+                    feedbackButtons.forEach { button in
+                        if button.tag != feedbackselectedButton {
+                            button.layer.backgroundColor = UIColor.palette.feedBackButtonColor.cgColor
+                            button.tintColor = .black
+                        }else {
+                            button.layer.backgroundColor = UIColor.palette.primaryColor.cgColor
+                            button.tintColor = .white
+                            selectedFeedbackCount = 1
+                        }
+                    }                    
                 case .othersFeedback:
-                    selectedOtherFeedback()
                     feedbackView.isHidden = false
                     thankYouView.isHidden = true
+                    othersFeedbacksetup()
                     additionalFeedbackView.isHidden = false
                     
                 case .liked:
@@ -230,6 +243,16 @@ class FeedbackTableViewCell: UITableViewCell {
         })
     }
     
+    func othersFeedbacksetup() {
+        feedbackButtons.forEach { button in
+            button.layer.backgroundColor = UIColor.palette.feedBackButtonColor.cgColor
+            button.tintColor = .black
+        }
+        othersFeedbackButton.layer.backgroundColor = UIColor.palette.primaryColor.cgColor
+        othersFeedbackButton.tintColor = .white
+    }
+    
+    
     func selectedOtherFeedback() {
         feedbackButtons.forEach { button in
             button.layer.backgroundColor = UIColor.palette.feedBackButtonColor.cgColor
@@ -238,16 +261,15 @@ class FeedbackTableViewCell: UITableViewCell {
         additionalFeedbackView.isHidden = false
         othersFeedbackButton.backgroundColor = UIColor.palette.primaryColor
         othersFeedbackButton.tintColor = .white
-        delegate?.didTapFeedbackButton(in: self, newStatus: .othersFeedback)
+        delegate?.didTapFeedbackButton(in: self, newStatus: .othersFeedback, selectButtonIndex: 0)
     }
     
     func updateButtonBackgroundColor(_ button: UIButton) {
         othersFeedbackButton.layer.backgroundColor = UIColor.palette.feedBackButtonColor.cgColor
         othersFeedbackButton.tintColor = .black
-
-        // Ensure proper color comparison
+        
         let isCurrentlySelected = button.backgroundColor?.cgColor == UIColor.palette.primaryColor.cgColor
-
+        
         if isCurrentlySelected {
             button.backgroundColor = UIColor.palette.feedBackButtonColor.withAlphaComponent(1)
             button.tintColor = .black
@@ -259,42 +281,48 @@ class FeedbackTableViewCell: UITableViewCell {
             selectedFeedbackCount += 1
         }
         
-        // Update the UI immediately
         button.setNeedsLayout()
         button.layoutIfNeeded()
-
+        
         if additionalFeedbackView.isHidden == false {
             additionalFeedbackView.isHidden = true
-            delegate?.didTapFeedbackButton(in: self, newStatus: .feedback)
+            delegate?.didTapFeedbackButton(in: self, newStatus: .feedback, selectButtonIndex: button.tag)
         }
     }
-
-    
-
-
 }
-
 
 extension FeedbackTableViewCell: UITextViewDelegate {
-    // MARK: - UITextViewDelegate methods
-       func textViewDidBeginEditing(_ textView: UITextView) {
-           if textView.text == "Provide additional feedback..." {
-               textView.text = ""
-               textView.textColor = .black
-           }
-       }
-
-       func textViewDidEndEditing(_ textView: UITextView) {
-           // Update the feedbackItem model with the new feedback text
-           if let feedbackText = textView.text, let index = feedbackItem?.index {
-               feedbackItem?.data?[0].additionalFeedback = feedbackText
-               delegate?.didUpdateAdditionalFeedback(in: self, newFeedback: feedbackText)
-           }
-       }
-       
-       func textViewDidChange(_ textView: UITextView) {
-           // Live update the additional feedback text
-           delegate?.didUpdateAdditionalFeedback(in: self, newFeedback: textView.text)
-       }
-
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == "(optional) Feel free to add specific detail" {
+            textView.text = ""
+            textView.textColor = .black
+        }
+        textView.becomeFirstResponder()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text != "\n" && textView.text != "" {
+            guard let index = index?.row else { return }
+            let feedbackText = textView.text.isEmpty ? "(optional) Feel free to add specific detail" : textView.text
+            addFeedBackIndexDict[index] = feedbackText
+            delegate?.didUpdateAdditionalFeedback(in: self, newFeedback: feedbackText ?? "")
+        }else {
+            textView.resignFirstResponder()
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        guard let index = index?.row else { return }
+        if let text = textView.text, text.hasSuffix("\n") {
+            textView.resignFirstResponder()
+        }else {
+            let feedbackText = textView.text.isEmpty ? "(optional) Feel free to add specific detail" : textView.text
+            
+            addFeedBackIndexDict[index] = feedbackText
+            delegate?.didUpdateAdditionalFeedback(in: self, newFeedback: feedbackText ?? "")
+        }
+   
+    }
+    
 }
+

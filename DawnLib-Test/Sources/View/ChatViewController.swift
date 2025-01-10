@@ -19,22 +19,27 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
     var viewModel = ChatViewModel()
     var activeIndexPath: IndexPath?
     var feedbackItems: [FeedbackItem] = []
+    var activeTextView: UITextView?
     // MARK: - Life Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         inputTextView.tag = 0
-        questionTableView.isUserInteractionEnabled = true
         setUpNavbar()
         setUpTableView()
-        addDoneButtonToKeyboard()
+        //        addDoneButtonToKeyboard()
         setUpNotificationObservers()
         setUpHeaderndFooter()
         print("questionTableView.frame.height",self.questionTableView.frame.height)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        inputTextView.returnKeyType = .done
+        questionTableView.keyboardDismissMode = .onDrag
         chatInputView.backgroundColor = .white
         chatInputView.layer.shadowColor = UIColor.black.cgColor
         chatInputView.layer.shadowOpacity = 0.5
@@ -43,11 +48,6 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         chatInputView.layer.cornerRadius = chatInputView.frame.height/2
         chatInputView.clipsToBounds = false
         sendButton.layer.cornerRadius = sendButton.frame.height/2
-        questionTableView.sectionHeaderHeight = UITableView.automaticDimension
-        questionTableView.sectionFooterHeight = UITableView.automaticDimension
-        questionTableView.estimatedSectionHeaderHeight = 0
-        questionTableView.estimatedSectionFooterHeight = 0
-        
     }
     
     func setUpTapGuesture() {
@@ -56,7 +56,6 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func setUpNavbar() {
-        // Use the helper methods to create the navbar components
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             customView: NavbarHelper.createLeftBarButton()
         )
@@ -102,59 +101,31 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     @objc func doneButtonTapped() {
-        inputTextView.resignFirstResponder() // Dismiss the keyboard
+        inputTextView.resignFirstResponder()
     }
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
     
-    @objc public func keyboardWillShow(_ notification: Notification){
-        scrollToBottom()
-        if let keyboardFrame = (
-            notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
-        )?.cgRectValue {
-            let keyboardHeight = keyboardFrame.height
-            customInputViewBottomConstraint.constant = -keyboardHeight
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-            self.questionTableView.reloadData()
-        }
-    }
-    
-    
-    @objc public func keyboardWillHide(_ notification: Notification){
-        customInputViewBottomConstraint.constant = 0
-        UIView
-            .animate(
-                withDuration: 0
-            ) {
-                self.view
-                    .layoutIfNeeded()
-            }
-        self.questionTableView.reloadData()
-    }
-    
-    
     public static func instantiate() -> ChatViewController? {
         let storyboard = UIStoryboard(name: StoryboardConstants.mainStoryboardName, bundle: nil)
         
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: StoryboardConstants.chatViewControllerIdentifier) as? ChatViewController else {            
+        guard let viewController = storyboard.instantiateViewController(withIdentifier: StoryboardConstants.chatViewControllerIdentifier) as? ChatViewController else {
             return nil
         }
         return viewController
     }
-
+    
     
     func setUpHeaderndFooter() {
         let tableViewHeader = ChatHeaderView.load(frame: CGRect(x: 0, y: 0, width: questionTableView.frame.width, height: 150))
         questionTableView.tableHeaderView = tableViewHeader
         
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: self.questionTableView.frame.width, height: 200))
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: self.questionTableView.frame.width, height: 150))
         footerView.backgroundColor = .clear
         
-        let footerLabel = UILabel(frame: footerView.bounds) 
+        let footerLabel = UILabel(frame: footerView.bounds)
         footerLabel.textAlignment = .center
         footerLabel.numberOfLines = 0
         footerLabel.configureFooterText(
@@ -239,8 +210,6 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         inputTextView.inputAccessoryView = toolbar
     }
     
-   
-    
     func setUpNotificationObservers() {
         // Observers for keyboard events
         NotificationCenter.default
@@ -267,28 +236,6 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         view.addGestureRecognizer(tapGesture)
     }
     
-    func adjustForKeyboardShow(keyboardHeight: CGFloat) {
-        customInputViewBottomConstraint.constant = -keyboardHeight
-        
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-            self.questionTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-            self.questionTableView.scrollIndicatorInsets = self.questionTableView.contentInset
-        }
-    }
-    
-    func adjustForKeyboardHide() {
-        customInputViewBottomConstraint.constant = 0
-        
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-            self.questionTableView.contentInset = .zero
-            self.questionTableView.scrollIndicatorInsets = .zero
-        } completion: { _ in
-            self.questionTableView.reloadData() // Refresh layout
-        }
-    }
-    
     func scrollToBottom() {
         DispatchQueue.main.async {
             self.questionTableView.layoutIfNeeded()
@@ -301,19 +248,29 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     @IBAction func sendButtonTapped(_ sender: Any) {
-        let questionText = inputTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let questionText else { return }
+        fetchChatData()
+    }
+    
+    func fetchChatData(text:String? = nil) {
+        let questionText = text != nil ? text : inputTextView.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         
-        viewModel.addingLoader()
+        inputTextView.text == PlaceholderText.askAQuestionPlaceholder
+        inputTextView.textColor = .systemGray4
+        viewModel.addingAnswer(selectedQuestion: questionText ?? "")
+        view.isUserInteractionEnabled = false
         DispatchQueue.main.async {
+            self.scrollToBottom()
             self.questionTableView.reloadData()
         }
+        //        if chatItem?.pre_defined == false || chatItem?.pre_defined == nil {
+        //            viewModel.jsonResponse?.remove(at: indexPath.row)
+        //        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             self.viewModel.fetchDataAndDisplay(question: questionText)
             if let index = self.viewModel.jsonResponse?.firstIndex(where: { $0.type == .loader }) {
-                self.inputTextView.text = ""
                 self.viewModel.jsonResponse?.remove(at: index)
+                self.view.isUserInteractionEnabled = true
                 self.questionTableView.reloadData()
             }
         }
@@ -350,9 +307,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.index = indexPath
             cell.ResponseIndexDict = viewModel.ResponseIndexDict
             cell.jsonResponse = viewModel.jsonResponse?[indexPath.row]
-            
-            cell.configure(with:"For improving your sleep and addressing your tiredness, you may consider the following:\n\n- Establish a consistent sleep schedule by going to bed and waking up at the same time each day.\n- Create a peaceful sleep environment; keep the room dark, cool, and quiet to facilitate better rest.\n- Limit screen time before bed to reduce blue light exposure and engage in calming activities like reading or meditation.\n\nFor a holistic view of your sleep health and to identify risk factors, consider taking our [sleep assessment](https://www.resmed.com.au/online-sleep-assessment). Our fun AI [SelfieScreener](https://www.resmed.com.au/selfie-screener) tool can provide insights into your sleep health in just minutes. Always consult with a licensed healthcare professional for medical advice, diagnosis and treatment options" )
-//            chatItem?.bulletPoints ?? [String]()
+            cell.configure(with:chatItem?.bulletPoints ?? [String]())
             
             return cell
         case .loader:
@@ -370,13 +325,12 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
                 // Initialize with .closed if not present
                 viewModel.feedBackIndexDict[indexPath.row] = .closed
             }
+            cell.feedbackselectedButton = viewModel.feedbackselectedButton
+            cell.addFeedBackIndexDict = viewModel.addFeedBackIndexDict
             cell.feedBackIndexDict = viewModel.feedBackIndexDict
-            cell.additionalFeedbackTextView.delegate = self
+            //            cell.additionalFeedbackTextView.delegate = self
             cell.screenSetup()
             cell.delegate = self
-//            let feedbackItem = feedbackItems[indexPath.row]
-
-//            cell.configure(with: feedbackItem)
             
             return cell
         case .none:
@@ -392,23 +346,18 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         
         switch chatItem?.type {
         case .question:
-            viewModel.addingLoader()
-            DispatchQueue.main.async {
-                self.questionTableView.reloadData()
+            fetchChatData(text: chatItem?.question)
+        case .answer:
+            print("efsgdb")
+        case .bulletPoints:
+            print("ffffffff")
+            if let visibleIndexPaths = questionTableView.indexPathsForVisibleRows, visibleIndexPaths.contains(indexPath) {
+                let cellFrame = questionTableView.rectForRow(at: indexPath)
+                let cellFrameInVC = questionTableView.convert(cellFrame, to: self.view)
+                let popupLocation = CGPoint(x: cellFrameInVC.midX, y: cellFrameInVC.maxY)
+                showPopup(at: popupLocation)
             }
-            questionTableView.isUserInteractionEnabled = false
-            scrollToBottom()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.viewModel.fetchDataAndDisplay(question: chatItem?.question)
-                if let index = self.viewModel.jsonResponse?.firstIndex(where: { $0.type == .loader }) {
-                    self.viewModel.jsonResponse?.remove(at: index)
-                    self.questionTableView.isUserInteractionEnabled = true
-                    self.questionTableView.reloadData()
-                }
-            }
-        case .answer: break
-        case .bulletPoints: break
-
+            
         default:
             break
         }
@@ -421,20 +370,14 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         
         switch item?.type {
         case .question:
-            
-            let width = tableView.frame.width - 40
-            let height = calculateHeight(
-                forText: item?.question ?? "",
-                width: width
-            )
+            let height = viewModel.calculateCellHeight(
+                forText: item?.question ?? "")
             return height
             
         case .answer:
             
-            let width = tableView.frame.width - 40
-            let height = calculateHeight(
-                forText: item?.question ?? "",
-                width: width
+            let height = viewModel.calculateCellHeight(
+                forText: item?.question ?? ""
             )
             return height
             
@@ -442,12 +385,12 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             guard let bulletPoints = item?.bulletPoints else {
                 return 50.0
             }
-            let width = tableView.frame.width - 40
-            let height = calculateHeight(
-                forText: bulletPoints.joined(separator: "\n"),
-                width: width
+            let markdownText = bulletPoints.joined(separator: "\n")
+            let containerWidth = tableView.frame.width - 40 // Adjust for padding/margins
+            return viewModel.calculateMarkdownHeight(
+                markdownText: markdownText,
+                containerWidth: containerWidth
             )
-            return 800
             
         case .loader:
             return 50.0
@@ -462,7 +405,7 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
             }else if viewModel.feedBackIndexDict.contains(where: {$0.value == .disliked && $0.key == indexPath.row}) {
                 return FeedbackType.disliked.height
             }else {
-                return 120.0
+                return 60.0
             }
         case .none:
             return 0
@@ -471,29 +414,31 @@ public class ChatViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    func calculateHeight(forText text: String, width: CGFloat, font: UIFont? = UIFont.systemFont(ofSize: 16), lineHeight: CGFloat? = 23) -> CGFloat {
-        // Define the maximum size constraint
-        let maxSize = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+    func convertMarkdownToAttributedString(markdown: String, attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
+        // Convert markdown string to HTML format
+        let htmlString = markdown.replacingOccurrences(of: "\n", with: "<br>") // Handle line breaks for HTML
         
-
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.minimumLineHeight = lineHeight ?? 0.0
-        paragraphStyle.maximumLineHeight = lineHeight ?? 0.0
+        // Wrap the HTML in basic formatting to ensure markdown elements (like links) are rendered correctly
+        let wrappedHTML = "<html><body style=\"font-family: \(attributes[.font] as? UIFont ?? UIFont.systemFont(ofSize: 16)).fontName; font-size: 16px;\">\(htmlString)</body></html>"
         
-        // Define the attributes for the text, including the font and paragraph style
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font as Any,
-            .paragraphStyle: paragraphStyle
-        ]
+        // Convert the wrapped HTML to data
+        guard let data = wrappedHTML.data(using: .utf8) else {
+            return NSAttributedString(string: markdown, attributes: attributes) // Return plain attributed string if parsing fails
+        }
         
-        let boundingRect = (text as NSString).boundingRect(
-            with: maxSize,
-            options: .usesLineFragmentOrigin,
-            attributes: attributes,
-            context: nil
-        )
-    
-        return max(boundingRect.height , 80)
+        do {
+            // Try to convert the HTML data to an attributed string
+            let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+                .documentType: NSAttributedString.DocumentType.html,
+                .characterEncoding: String.Encoding.utf8.rawValue
+            ]
+            
+            let attributedString = try NSAttributedString(data: data, options: options, documentAttributes: nil)
+            return attributedString
+        } catch {
+            // If conversion fails, return plain attributed string
+            return NSAttributedString(string: markdown, attributes: attributes)
+        }
     }
     
     
@@ -503,99 +448,129 @@ extension ChatViewController: UITextViewDelegate {
     
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView.tag == 0 {
+            // Scroll to the bottom when editing begins
             scrollToBottom()
+            
+            // Highlight the input area for the active text view
             DispatchQueue.main.async {
                 self.chatInputView.layer.borderWidth = 1
                 self.chatInputView.layer.borderColor = UIColor.palette.primaryColor.cgColor
                 self.sendButton.layer.backgroundColor = UIColor.palette.primaryColor.cgColor
             }
             
+            // Clear placeholder text
             if textView.text == PlaceholderText.askAQuestionPlaceholder {
                 textView.text = ""
                 textView.textColor = .black
             }
+            
             return true
-        } else if textView.tag == 1 {
-            guard let cellPosition = textView.superview?.convert(CGPoint.zero, to: questionTableView),
-                    let indexPath = questionTableView.indexPathForRow(at: cellPosition) else {
-                  return true
-              }
-
-              // Store the currently active index path (optional)
-              activeIndexPath = indexPath
-
-              // Focus on the text view
-              return true
         }
         
-        return false
+        return true
     }
-
+    
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+        activeTextView = textView
+        
+        switch textView.tag {
+        case 0:
+            scrollToBottom()
+            handleKeyboardVisibility(for: textView, isKeyboardShowing: true, notification: nil)
+        default:
+            break
+        }
+        
+    }
     
     public func textViewDidEndEditing(_ textView: UITextView) {
         if textView.tag == 0 {
+            print(textView.text)
+            
+            if textView.text != "\n" && textView.text != "" {
+                fetchChatData()
+            }else {
+                textView.resignFirstResponder()
+            }
+            
+            // Reset the appearance for the input area
             chatInputView.layer.borderColor = UIColor.clear.cgColor
             sendButton.layer.backgroundColor = UIColor.systemGray4.cgColor
-            
-            if textView.text.isEmpty {
-                textView.text = PlaceholderText.askAQuestionPlaceholder
-                textView.textColor = .darkGray
-            }
-        } else if textView.tag == 1 {
-            guard let cellPosition = textView.superview?.convert(CGPoint.zero, to: questionTableView),
-                  let indexPath = questionTableView.indexPathForRow(at: cellPosition) else {
-                  return
-              }
+            textView.text = PlaceholderText.askAQuestionPlaceholder
+            textView.textColor = .darkGray
         }
-    }
-
-    
-    public func textViewShouldReturn(_ textView: UITextView) -> Bool {
-        if textView.tag == 0 {
-            textView.resignFirstResponder()
-            return true
-        }else {
-            textView.resignFirstResponder()
-            return true
-        }
+        
+        
+        activeTextView = nil
+        
+        handleKeyboardVisibility(for: textView, isKeyboardShowing: false, notification: nil)
     }
     
     public func textViewDidChange(_ textView: UITextView) {
-        if let cell = textView.superview?.superview as? FeedbackTableViewCell,
-           let indexPath = cell.index {
-            // Update the feedback item with the text
-            print("sv")
+        if let text = textView.text, text.hasSuffix("\n") {
+            textView.resignFirstResponder()
         }
     }
     
-    public func textView(_ textView: UITextView,shouldChangeTextIn range: NSRange,replacementText text: String) ->Bool {
-        let currentText = textView.text ?? ""
-        let updatedText = (
-            currentText as NSString
-        ).replacingCharacters(
-            in: range,
-            with: text
-        )
-        return true
+    // Function to handle keyboard appearance/disappearance based on active text view
+    private func handleKeyboardVisibility(for textView: UITextView, isKeyboardShowing: Bool, notification: Notification?) {
+        if let textView = activeTextView {
+            switch textView.tag {
+            case 0:
+                // Handle first text view keyboard appearance
+                if isKeyboardShowing {
+                    scrollToBottom()  // Scroll to the bottom when keyboard appears
+                    if let keyboardFrame = (notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                        let keyboardHeight = keyboardFrame.height
+                        customInputViewBottomConstraint.constant = -keyboardHeight
+                        UIView.animate(withDuration: 0.3) {
+                            self.view.layoutIfNeeded()
+                        }
+                    }
+                } else {
+                    // Reset input view when keyboard hides
+                    customInputViewBottomConstraint.constant = 0
+                    UIView.animate(withDuration: 0) {
+                        self.view.layoutIfNeeded()
+                    }
+                }
+                
+                
+            default:
+                break
+            }
+        }
+        questionTableView.reloadData()
     }
+    
+    @objc public func keyboardWillShow(_ notification: Notification) {
+        // Handle keyboard appearance globally
+        if let textView = activeTextView {
+            handleKeyboardVisibility(for: textView, isKeyboardShowing: true, notification: notification)
+        }
+    }
+    
+    @objc public func keyboardWillHide(_ notification: Notification) {
+        // Handle keyboard disappearance globally
+        if let textView = activeTextView {
+            handleKeyboardVisibility(for: textView, isKeyboardShowing: false, notification: notification)
+        }
+    }
+    
 }
 
 extension ChatViewController: FeedbackTableViewCellDelegate,ResponseTableViewDelegate {
     func didUpdateAdditionalFeedback(in cell: FeedbackTableViewCell, newFeedback: String) {
-        // Handle the updated additional feedback text
         guard let indexPath = questionTableView.indexPath(for: cell) else { return }
         
-        // Update the specific feedbackItem at the given indexPath
-        feedbackItems[indexPath.row].data?[0].additionalFeedback = newFeedback
-        
-        // Optionally reload the cell to reflect changes
-        questionTableView.reloadRows(at: [indexPath], with: .none)
+        viewModel.addFeedBackIndexDict[indexPath.row] = newFeedback
     }
     
-
+    
     func labelTapped(in cell: ResponseTableViewCell, tappedWord: String,at location: CGPoint) {
         print(tappedWord)
         //        showPopup(at: location)
+        showPopup(at: location)
     }
     
     func animationCompleted(in cell: ResponseTableViewCell) {
@@ -606,24 +581,21 @@ extension ChatViewController: FeedbackTableViewCellDelegate,ResponseTableViewDel
         }
     }
     
-    func didTapFeedbackButton(in cell: FeedbackTableViewCell, newStatus: FeedbackType) {
+    func didTapFeedbackButton(in cell: FeedbackTableViewCell, newStatus: FeedbackType,selectButtonIndex: Int) {
         guard let indexPath = cell.index else { return }
-        
+        viewModel.feedbackselectedButton = selectButtonIndex
+
         if cell.isTextViewOpen == false {
-            // Update the status in the data model
             viewModel.feedBackIndexDict[indexPath.row] = newStatus
             
-            // Only reload if the text view is not open
             questionTableView.reloadRows(at: [indexPath], with: .none)
         } else {
-            // Text view is open, so directly update the status in the data model
             viewModel.feedBackIndexDict[indexPath.row] = newStatus
-
-            // Do not reload the cell; allow the user to continue typing
+            
             print("TextView is open, status updated in the model only.")
         }
     }
-
+    
     
     func showPopup(at location: CGPoint) {
         // Remove any existing popup
@@ -634,9 +606,8 @@ extension ChatViewController: FeedbackTableViewCellDelegate,ResponseTableViewDel
         let popupY: CGFloat
         let content = PopupMessages.passwordCreationMessage
         let width = self.view.frame.width - 40
-        let contentHeight = calculateHeight(
-            forText: content,
-            width: width
+        let contentHeight = viewModel.calculateCellHeight(
+            forText: content
         )
         
         if location.y + contentHeight + 50 > view.bounds.height {
@@ -650,7 +621,7 @@ extension ChatViewController: FeedbackTableViewCellDelegate,ResponseTableViewDel
         
         
         DispatchQueue.main.async {
-            let popupView = PopupView.load(frame: CGRect(x: 20, y: safePopupY + contentHeight, width: self.view.frame.width - 40, height: contentHeight + 40))
+            let popupView = PopupView.load(frame: CGRect(x: 20, y: safePopupY + contentHeight + 30, width: self.view.frame.width - 40, height: contentHeight + 40))
             popupView.contentLabel.text = content
             popupView.tag = 1
             self.view.addSubview(popupView)

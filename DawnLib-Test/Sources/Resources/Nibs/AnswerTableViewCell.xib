@@ -19,16 +19,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qst-8e-BPK">
-                        <rect key="frame" x="69.333333333333343" y="10" width="317.66666666666663" height="101"/>
+                        <rect key="frame" x="30" y="10" width="357" height="101"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dynamic Visibility: Use the isVisible property to control when items appear." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLb-22-EGs">
-                                <rect key="frame" x="30" y="15.666666666666668" width="277.66666666666669" height="59.666666666666657"/>
+                                <rect key="frame" x="30" y="25.666666666666668" width="317" height="39.666666666666657"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowtriangle.down.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="NmU-A2-pNf">
-                                <rect key="frame" x="297.66666666666669" y="83.333333333333329" width="30" height="25.333333333333329"/>
+                                <rect key="frame" x="337" y="83.333333333333329" width="30" height="25.333333333333329"/>
                                 <color key="tintColor" name="AnswerBGColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="3RU-it-KFw"/>
@@ -48,14 +48,12 @@
                 <constraints>
                     <constraint firstItem="Qst-8e-BPK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Lef-si-t8x"/>
                     <constraint firstAttribute="bottom" secondItem="Qst-8e-BPK" secondAttribute="bottom" constant="10" id="Vs3-4B-Pct"/>
+                    <constraint firstItem="Qst-8e-BPK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="XpC-CX-YlL"/>
                     <constraint firstAttribute="trailing" secondItem="Qst-8e-BPK" secondAttribute="trailing" constant="10" id="djC-pQ-nV2"/>
                     <constraint firstItem="SLb-22-EGs" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-5" id="sSN-2T-NGP"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
-            <constraints>
-                <constraint firstItem="Qst-8e-BPK" firstAttribute="width" secondItem="KGk-i7-Jjw" secondAttribute="width" multiplier="0.8" id="kS0-ff-s49"/>
-            </constraints>
             <connections>
                 <outlet property="anwerLabel" destination="SLb-22-EGs" id="VAj-WM-wbq"/>
                 <outlet property="anwerView" destination="Qst-8e-BPK" id="YMn-CD-BXt"/>

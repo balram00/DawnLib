@@ -14,16 +14,15 @@ enum FeedbackType: CaseIterable {
     case feedback
     case liked
     case disliked
-    
     var height: CGFloat {
         switch self {
-        case .closed: return 120
-        case .othersFeedback: return 630
-        case .feedback: return 430
+        case .closed: return 80.0
+        case .othersFeedback: return 630.0
+        case .feedback: return 430.0
         case .liked:
-            return 200
+            return 150.0
         case .disliked:
-            return 200
+            return 150.0
         }
     }
 }

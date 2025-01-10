@@ -21,7 +21,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XxC-7d-VYx">
-                        <rect key="frame" x="10" y="10" width="110" height="50"/>
+                        <rect key="frame" x="10" y="3" width="110" height="50"/>
                         <subviews>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kJ9-vW-eKw">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -59,7 +59,7 @@
                         </constraints>
                     </stackView>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKw-m9-69g" userLabel="Feedbackview">
-                        <rect key="frame" x="30" y="90" width="985" height="530"/>
+                        <rect key="frame" x="30" y="63" width="985" height="557"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tell us more :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIX-hy-hx5">
                                 <rect key="frame" x="10" y="10" width="95.333333333333329" height="30"/>
@@ -86,9 +86,9 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hqp-sv-xjJ">
-                                <rect key="frame" x="0.0" y="50" width="985" height="480"/>
+                                <rect key="frame" x="0.0" y="50" width="985" height="507"/>
                                 <subviews>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="itF-EI-lyE">
+                                    <button tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="itF-EI-lyE">
                                         <rect key="frame" x="20" y="10" width="174" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
@@ -103,7 +103,7 @@
                                             <action selector="didNotProvideAnswerTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Cea-8K-KAk"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QnX-hm-kF3">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QnX-hm-kF3">
                                         <rect key="frame" x="19.999999999999993" y="60" width="110.33333333333331" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
@@ -118,7 +118,7 @@
                                             <action selector="notRelevantTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="B5p-8o-cTr"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tX-aq-g2q">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tX-aq-g2q">
                                         <rect key="frame" x="140.33333333333337" y="60" width="165.66666666666663" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
@@ -133,7 +133,7 @@
                                             <action selector="notFactuallyCorrectTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wIu-ah-A3e"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pW5-SB-dyb">
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pW5-SB-dyb">
                                         <rect key="frame" x="20" y="110" width="175.66666666666666" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
@@ -148,7 +148,7 @@
                                             <action selector="didNotLikeTheAnswerTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="aal-T9-Aln"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaH-TC-dPr">
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaH-TC-dPr">
                                         <rect key="frame" x="20" y="160" width="157" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
@@ -156,14 +156,14 @@
                                         </constraints>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Didb't like the style">
+                                        <buttonConfiguration key="configuration" style="plain" title="Didn't like the style">
                                             <fontDescription key="titleFontDescription" name="ArialMT" family="Arial" pointSize="16"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="didNotLikeTheStyleTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YK3-ZC-kiZ"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qoC-Rt-lhX">
+                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qoC-Rt-lhX">
                                         <rect key="frame" x="187" y="160" width="72.333333333333314" height="40"/>
                                         <color key="backgroundColor" name="FeedBackButtonColor"/>
                                         <constraints>
@@ -210,7 +210,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsr-aU-4eV">
-                                        <rect key="frame" x="901" y="430" width="74" height="40"/>
+                                        <rect key="frame" x="901" y="457" width="74" height="40"/>
                                         <color key="backgroundColor" name="PrimaryColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="9jx-ga-k2E"/>
@@ -253,19 +253,20 @@
                             <constraint firstAttribute="bottom" secondItem="hqp-sv-xjJ" secondAttribute="bottom" id="6zG-zE-gQ2"/>
                             <constraint firstItem="hqp-sv-xjJ" firstAttribute="top" secondItem="kIX-hy-hx5" secondAttribute="bottom" constant="10" id="Bao-Sv-vaT"/>
                             <constraint firstItem="hqp-sv-xjJ" firstAttribute="leading" secondItem="dKw-m9-69g" secondAttribute="leading" id="E4V-zv-dTs"/>
-                            <constraint firstItem="6A4-Wa-BZF" firstAttribute="top" secondItem="dKw-m9-69g" secondAttribute="top" constant="10" id="Ewy-UG-dVe"/>
-                            <constraint firstItem="kIX-hy-hx5" firstAttribute="top" secondItem="dKw-m9-69g" secondAttribute="top" constant="10" id="Lo0-6x-xxL"/>
+                            <constraint firstItem="kIX-hy-hx5" firstAttribute="top" secondItem="6A4-Wa-BZF" secondAttribute="top" id="Ffi-bx-Wh1"/>
+                            <constraint firstItem="6A4-Wa-BZF" firstAttribute="top" secondItem="dKw-m9-69g" secondAttribute="top" constant="10" id="RC3-zd-gEx"/>
+                            <constraint firstItem="hqp-sv-xjJ" firstAttribute="top" secondItem="kIX-hy-hx5" secondAttribute="bottom" constant="10" id="YX0-oe-rpP"/>
                             <constraint firstAttribute="trailing" secondItem="hqp-sv-xjJ" secondAttribute="trailing" id="YzV-JY-K98"/>
                             <constraint firstAttribute="trailing" secondItem="6A4-Wa-BZF" secondAttribute="trailing" constant="10" id="gfz-Nx-j5g"/>
                         </constraints>
                     </view>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9dE-la-05g">
-                        <rect key="frame" x="30" y="90" width="985" height="80"/>
+                        <rect key="frame" x="30" y="63" width="985" height="80"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="     Thank you for the feedback!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qiQ-0W-BBi">
                                 <rect key="frame" x="0.0" y="0.0" width="985" height="80"/>
                                 <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="16"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -282,11 +283,11 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="XxC-7d-VYx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="1gW-gx-yHf"/>
-                    <constraint firstItem="XxC-7d-VYx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="7Ag-Qx-9yE"/>
-                    <constraint firstItem="9dE-la-05g" firstAttribute="top" secondItem="XxC-7d-VYx" secondAttribute="bottom" constant="30" id="PgM-rf-YBA"/>
+                    <constraint firstItem="XxC-7d-VYx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="7Ag-Qx-9yE"/>
+                    <constraint firstItem="9dE-la-05g" firstAttribute="top" secondItem="XxC-7d-VYx" secondAttribute="bottom" constant="10" id="PgM-rf-YBA"/>
                     <constraint firstAttribute="bottomMargin" secondItem="dKw-m9-69g" secondAttribute="bottom" constant="10" id="U12-rt-oen"/>
-                    <constraint firstItem="dKw-m9-69g" firstAttribute="top" secondItem="XxC-7d-VYx" secondAttribute="bottom" constant="30" id="YZB-T3-vwH"/>
                     <constraint firstItem="9dE-la-05g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="eht-hN-ake"/>
+                    <constraint firstItem="dKw-m9-69g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="63" id="hWv-UU-i0i"/>
                     <constraint firstItem="dKw-m9-69g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="nfz-Ch-4ga"/>
                     <constraint firstAttribute="trailingMargin" secondItem="dKw-m9-69g" secondAttribute="trailing" constant="10" id="sG7-dG-7HH"/>
                     <constraint firstAttribute="trailingMargin" secondItem="9dE-la-05g" secondAttribute="trailing" constant="10" id="yir-d2-iTR"/>

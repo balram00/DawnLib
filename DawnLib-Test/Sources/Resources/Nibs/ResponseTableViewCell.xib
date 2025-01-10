@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9pI-dI-fdw">
-                        <rect key="frame" x="0.0" y="0.0" width="444" height="240"/>
+                        <rect key="frame" x="10" y="0.0" width="424" height="240"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                         <color key="textColor" systemColor="labelColor"/>
@@ -30,8 +30,8 @@
                 </subviews>
                 <color key="tintColor" name="PrimaryColor"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="9pI-dI-fdw" secondAttribute="trailing" id="LXD-bB-5hn"/>
-                    <constraint firstItem="9pI-dI-fdw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="lii-SI-M70"/>
+                    <constraint firstAttribute="trailing" secondItem="9pI-dI-fdw" secondAttribute="trailing" constant="10" id="LXD-bB-5hn"/>
+                    <constraint firstItem="9pI-dI-fdw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="lii-SI-M70"/>
                     <constraint firstItem="9pI-dI-fdw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="noa-Oo-025"/>
                     <constraint firstAttribute="bottom" secondItem="9pI-dI-fdw" secondAttribute="bottom" id="uZf-3R-z8e"/>
                 </constraints>

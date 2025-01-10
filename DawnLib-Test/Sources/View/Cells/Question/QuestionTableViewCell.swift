@@ -34,16 +34,7 @@ class QuestionTableViewCell: UITableViewCell {
             lineHeight: 23,
             alignment: .left
         )
-        questionLabel.isUserInteractionEnabled = true
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
-//        questionLabel.addGestureRecognizer(tapGesture)
       }
-    
-
-    
-    @objc func labelTapped(_ sender: UITapGestureRecognizer) {
-      
-    }
 
     func configure(with questionText: String) {
            questionLabel.text = questionText
